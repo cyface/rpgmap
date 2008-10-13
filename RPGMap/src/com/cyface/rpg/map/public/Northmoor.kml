@@ -1,0 +1,77 @@
+<kml xmlns="http://earth.google.com/kml/2.1">
+  <Document>
+    <name>Northmoor</name>
+    <Style id="Style_207678246">
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <LineStyle>
+        <width>1</width>
+      </LineStyle>
+      <BalloonStyle>
+        <bgColor>FFFFFFFF</bgColor>
+        <textColor>FF000000</textColor>
+      </BalloonStyle>
+    </Style>
+    <Snippet>
+    </Snippet>
+    <Placemark>
+      <visibility>1</visibility>
+      <name>The Lost Village</name>
+      <Style>
+        <IconStyle>
+          <Icon>
+            <href>http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png</href>
+            <refreshMode>
+            </refreshMode>
+            <refreshInterval>
+            </refreshInterval>
+            <viewRefreshMode>
+            </viewRefreshMode>
+            <viewRefreshTime>
+            </viewRefreshTime>
+          </Icon>
+          <hotSpot />
+        </IconStyle>
+        <BalloonStyle>
+          <bgColor>FFFFFFFF</bgColor>
+          <textColor>FF000000</textColor>
+        </BalloonStyle>
+      </Style>
+      <Snippet>A great place!</Snippet>
+      <Point id="KMLe_8">
+        <altitudeMode>clampToGround</altitudeMode>
+        <coordinates>17.4,-41.0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <visibility>1</visibility>
+      <name>The Narrows</name>
+      <Style>
+        <IconStyle>
+          <Icon>
+            <href>http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png</href>
+            <refreshMode>
+            </refreshMode>
+            <refreshInterval>
+            </refreshInterval>
+            <viewRefreshMode>
+            </viewRefreshMode>
+            <viewRefreshTime>
+            </viewRefreshTime>
+          </Icon>
+          <hotSpot />
+        </IconStyle>
+        <BalloonStyle>
+          <bgColor>FFFFFFFF</bgColor>
+          <textColor>FF000000</textColor>
+        </BalloonStyle>
+      </Style>
+      <Snippet>The Narrows in the river.</Snippet>
+      <Point id="KMLe_7">
+        <altitudeMode>clampToGround</altitudeMode>
+        <coordinates>13.18,-39.0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
