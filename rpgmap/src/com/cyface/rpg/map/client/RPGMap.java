@@ -46,7 +46,7 @@ public class RPGMap implements EntryPoint {
 		copyrightCollection.addCopyright(copyright);
 
 		// create a custom picture layer
-		TileLayer[] tileLayers = { new RPGMapTileLayer(copyrightCollection, 0, maxZoom + 2) };
+		TileLayer[] tileLayers = { new RPGMapTileLayer("RPGMap-tiles/", ".jpg", copyrightCollection, 0, maxZoom + 2) };
 		RPGMapProjection rpgMapProjection = new RPGMapProjection(maxZoom + 2, RPGMapProjection.IMAGE_WRAPS);
 		MapTypeOptions mapTypeOptions = new MapTypeOptions();
 		mapTypeOptions.setMinResolution(minZoom);
