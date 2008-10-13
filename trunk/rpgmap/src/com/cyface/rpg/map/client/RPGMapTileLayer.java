@@ -10,8 +10,10 @@ public class RPGMapTileLayer extends TileLayer {
 	String fileExtension = ".jpg";
 	boolean isPng = false;
 
-	public RPGMapTileLayer(CopyrightCollection copyrights, int minResolution, int maxResolution) {
+	public RPGMapTileLayer(String tileImageUrl, String tileImageExtension, CopyrightCollection copyrights, int minResolution, int maxResolution) {
 		super(copyrights, minResolution, maxResolution);
+		this.folderName = tileImageUrl;
+		this.fileExtension = tileImageExtension;
 	}
 
 	@Override
