@@ -18,11 +18,13 @@ public class MapServiceImpl extends RemoteServiceServlet {
 	
 	ArrayList<Map> getAllMaps() {
 		ArrayList<Map> resultList = new ArrayList<Map>();
+		logger.debug("Aieee!");
 		try {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("rpgmap");
 			EntityManager em = emf.createEntityManager();
-			Map myMap = em.find(Map.class, new Map(1));
+			Map myMap = em.find(Map.class, new Integer(1));
 			logger.debug(myMap);
+			resultList.add(myMap);
 			
 		} catch (Exception ex) {
 			logger.error(ex);
