@@ -9,7 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name="map.getAll", query="select all from map")
+@NamedQuery(name="map.getAll", query="select map from map")
 @Table(name = "map", schema = "rpgmap")
 public class Map implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
