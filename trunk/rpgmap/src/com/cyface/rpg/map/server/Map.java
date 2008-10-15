@@ -1,18 +1,23 @@
 package com.cyface.rpg.map.server;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
+@NamedQuery(name="map.getAll", query="select all from map")
 @Table(name = "map", schema = "rpgmap")
 public class Map implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 
 	@Id
 	private int id;
-	private int owner_id;
+	@Column(name = "OWNER_ID")
+	private int ownerId;
 	private String name;
 
 	public Map() {
@@ -37,11 +42,11 @@ public class Map implements Serializable {
 	}
 
 	public int getOwnerId() {
-		return owner_id;
+		return ownerId;
 	}
 
 	public void setOwnerId(int ownerId) {
-		this.owner_id = ownerId;
+		this.ownerId = ownerId;
 	}
 
 	public String getName() {
