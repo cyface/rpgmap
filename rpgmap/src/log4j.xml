@@ -14,6 +14,10 @@
 <category name="org.hibernate.SQL">
    <priority value="DEBUG"/>
 </category>
+<!-- Application Code -->
+<category name="com.cyface">
+   <priority value="DEBUG"/>
+</category>
 <!-- Otherwise we will only display ERROR messages -->
 <root>
    <priority value ="ERROR" />
