@@ -3,6 +3,7 @@
 	<persistence-unit name="rpgmap">
 		<mapping-file>META-INF/orm.xml</mapping-file>
 		<class>com.cyface.rpg.map.server.Point</class>
+		<class>com.cyface.rpg.map.server.Map</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
