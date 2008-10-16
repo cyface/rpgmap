@@ -6,12 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name="map.getAll", query="select map from map")
-@Table(name = "map", schema = "rpgmap")
-public class Map implements Serializable {
+@Table(name="map", schema="rpgmap")
+@PersistenceUnit(name="rpgmap")
+@NamedQuery(name="RPGMapMap.getAll", query="SELECT map FROM RPGMapMap as map ORDER BY name")
+public class RPGMapMap implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 
 	@Id
@@ -20,10 +22,10 @@ public class Map implements Serializable {
 	private int ownerId;
 	private String name;
 
-	public Map() {
+	public RPGMapMap() {
 	}
 
-	public Map(int id) {
+	public RPGMapMap(int id) {
 		setId(id);
 	}
 

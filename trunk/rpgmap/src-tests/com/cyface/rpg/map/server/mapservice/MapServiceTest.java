@@ -1,39 +1,49 @@
 package com.cyface.rpg.map.server.mapservice;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.servlet.ServletException;
 
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
-import com.cyface.rpg.map.client.entities.Map;
-import com.cyface.rpg.map.client.entities.Point;
-
+import com.cyface.rpg.map.client.entities.RPGMapMap;
+import com.cyface.rpg.map.client.entities.RPGMapPoint;
 
 public class MapServiceTest extends TestCase {
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceTest.class);
 
 	public void testGetAllMaps() {
 		MapServiceImpl mapService = new MapServiceImpl();
-		
-		ArrayList<Map> mapList = mapService.getAllMaps();
-		
-		Iterator<Map> mapListIterator = mapList.iterator();
+		try {
+			mapService.init();
+		} catch (ServletException e) {
+			logger.error(e);
+		}
+		ArrayList<RPGMapMap> mapList = mapService.getAllMaps();
+
+		Iterator<RPGMapMap> mapListIterator = mapList.iterator();
 		while (mapListIterator.hasNext()) {
-			Map currentMap = mapListIterator.next();
+			RPGMapMap currentMap = mapListIterator.next();
 			logger.debug(currentMap);
 		}
 		assertNotNull(mapListIterator);
 	}
-	
+
 	public void testGetAllPoints() {
 		MapServiceImpl mapService = new MapServiceImpl();
-		
-		ArrayList<Point> pointList = mapService.getAllPoints();
-		
-		Iterator<Point> pointListIterator = pointList.iterator();
+		try {
+			mapService.init();
+		} catch (ServletException e) {
+			logger.error(e);
+		}
+		ArrayList<RPGMapPoint> pointList = mapService.getAllPoints();
+
+		Iterator<RPGMapPoint> pointListIterator = pointList.iterator();
 		while (pointListIterator.hasNext()) {
-			Point currentPoint = pointListIterator.next();
+			RPGMapPoint currentPoint = pointListIterator.next();
 			logger.debug(currentPoint);
 		}
 		assertNotNull(pointListIterator);

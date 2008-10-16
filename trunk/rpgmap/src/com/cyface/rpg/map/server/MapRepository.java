@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 
-import com.cyface.rpg.map.client.entities.Map;
+import com.cyface.rpg.map.client.entities.RPGMapMap;
 
 public class MapRepository {
 	public static void main(String args[]) {
@@ -28,7 +28,7 @@ public class MapRepository {
 	}
 
 	public static void AddAccount(EntityManager em) {
-		Map myMap = new Map();
+		RPGMapMap myMap = new RPGMapMap();
 		myMap.setName("MyMap2");
 		myMap.setOwnerId(1);
 		em.persist(myMap);

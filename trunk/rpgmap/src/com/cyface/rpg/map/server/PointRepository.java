@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 
-import com.cyface.rpg.map.client.entities.Point;
+import com.cyface.rpg.map.client.entities.RPGMapPoint;
 
 public class PointRepository {
 	public static void main(String args[]) {
@@ -28,7 +28,7 @@ public class PointRepository {
 	}
 
 	public static void AddAccount(EntityManager em) {
-		Point myPoint = new Point();
+		RPGMapPoint myPoint = new RPGMapPoint();
 		myPoint.setName("MyPoint");
 		myPoint.setLatitude(31.00393);
 		myPoint.setLongitude(-131.00664);
