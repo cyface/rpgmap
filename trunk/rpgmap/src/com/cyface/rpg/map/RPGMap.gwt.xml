@@ -21,5 +21,8 @@
 
 	<inherits name="com.google.gwt.maps.GoogleMaps" />
 	<script src="http://maps.google.com/maps?gwt=1&amp;file=api&amp;v=2.x&amp;key=ABQIAAAApKHrTPdMsrKnaI74fSfnhBRJ6vaczIFad8NLczJmP_xNxLdKkRQ2eDyvYLxB63ODRNbb2KdYKhMUBw" />
+	
+	<!-- The Map Service RPC -->
+	<servlet path="/mapservice" class="com.cyface.rpg.map.server.mapservice.MapServiceImpl" />
 
 </module>

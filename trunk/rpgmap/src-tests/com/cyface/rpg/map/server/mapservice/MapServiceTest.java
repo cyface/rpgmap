@@ -6,8 +6,8 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
-import com.cyface.rpg.map.server.Map;
-import com.cyface.rpg.map.server.Point;
+import com.cyface.rpg.map.client.entities.Map;
+import com.cyface.rpg.map.client.entities.Point;
 
 
 public class MapServiceTest extends TestCase {

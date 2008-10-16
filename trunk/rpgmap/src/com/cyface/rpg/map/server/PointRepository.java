@@ -5,6 +5,8 @@ import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 
+import com.cyface.rpg.map.client.entities.Point;
+
 public class PointRepository {
 	public static void main(String args[]) {
 		try {

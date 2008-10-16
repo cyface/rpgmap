@@ -1,4 +1,4 @@
-package com.cyface.rpg.map.server;
+package com.cyface.rpg.map.client.entities;
 
 import java.io.Serializable;
 

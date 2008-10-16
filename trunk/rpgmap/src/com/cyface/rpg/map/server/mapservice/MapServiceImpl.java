@@ -10,8 +10,8 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
-import com.cyface.rpg.map.server.Map;
-import com.cyface.rpg.map.server.Point;
+import com.cyface.rpg.map.client.entities.Map;
+import com.cyface.rpg.map.client.entities.Point;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class MapServiceImpl extends RemoteServiceServlet {
