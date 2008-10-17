@@ -1,8 +1,13 @@
 package com.cyface.rpg.map.client.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
@@ -14,12 +19,13 @@ import javax.persistence.Table;
 public class RPGMapPoint implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 
-	@Id
 	private int id;
+	private RPGMapMap parentRPGMapMap;
 	private double latitude;
 	private double longitude;
 	private String name;
 
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -50,5 +56,15 @@ public class RPGMapPoint implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@ManyToOne
+    @JoinColumn(name="parent_map_id")
+	public RPGMapMap getParentRPGMapMap() {
+		return parentRPGMapMap;
+	}
+	
+	public void setParentRPGMapMap(RPGMapMap parentRPGMapMap) {
+		this.parentRPGMapMap = parentRPGMapMap;
 	}
 }
