@@ -28,6 +28,7 @@ public class RPGMapPoint implements Serializable {
 	public String toString() {
 		StringBuffer outputBuffer = new StringBuffer();
 		outputBuffer.append("Point ID: ");
+		outputBuffer.append(getId());
 		outputBuffer.append("\tName: ");
 		outputBuffer.append(getName());
 		outputBuffer.append("\tLat/Lng: ");
