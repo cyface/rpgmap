@@ -35,7 +35,9 @@ public class RPGMapPoint implements Serializable {
 		outputBuffer.append(getLatitude());
 		outputBuffer.append("/");
 		outputBuffer.append(getLongitude());
-		outputBuffer.append("\tParent Map Name: ");
+		outputBuffer.append("\tParent Map ID/Name: ");
+		outputBuffer.append(getParentRPGMapMap().getId());
+		outputBuffer.append("/");
 		outputBuffer.append(getParentRPGMapMap().getName());
 
 		return outputBuffer.toString();
