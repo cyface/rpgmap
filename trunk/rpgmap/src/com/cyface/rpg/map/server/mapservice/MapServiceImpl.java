@@ -37,7 +37,7 @@ public class MapServiceImpl extends RemoteServiceServlet {
 			EntityManager em = emf.createEntityManager();
 			Query getAllMapsQuery = em.createNamedQuery("RPGMapMap.getAll");
 			List rawResultList = getAllMapsQuery.getResultList();
-			logger.error(rawResultList);
+			logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
 		} catch (Exception ex) {
 			logger.error(ex);
