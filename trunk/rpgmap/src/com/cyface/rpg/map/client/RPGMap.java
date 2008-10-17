@@ -1,9 +1,12 @@
 package com.cyface.rpg.map.client;
 
+import com.cyface.rpg.map.client.mapservice.MapService;
+import com.cyface.rpg.map.client.mapservice.MapServiceAsync;
+import com.cyface.rpg.map.client.mapservice.MapServiceAsyncCallback;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.Copyright;
 import com.google.gwt.maps.client.CopyrightCollection;
-import com.google.gwt.maps.client.InfoWindowContent;
 import com.google.gwt.maps.client.MapType;
 import com.google.gwt.maps.client.MapTypeOptions;
 import com.google.gwt.maps.client.MapWidget;
@@ -12,7 +15,7 @@ import com.google.gwt.maps.client.control.LargeMapControl;
 import com.google.gwt.maps.client.control.MapTypeControl;
 import com.google.gwt.maps.client.geom.LatLng;
 import com.google.gwt.maps.client.geom.LatLngBounds;
-import com.google.gwt.maps.client.overlay.Marker;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -63,15 +66,23 @@ public class RPGMap implements EntryPoint {
 
 		map.setCenter(LatLng.newInstance(centerLat, centerLon), initialZoom);
 
-		map.addOverlay(new Marker(LatLng.newInstance(centerLat, centerLon)));
+		// Marker lostVillageMarker = new Marker(LatLng.newInstance(17.4, -41));
+		// map.addOverlay(lostVillageMarker);
+		// InfoWindowContent lostVillageContent = new
+		// InfoWindowContent("<b>The Lost Village</b>");
+		// map.getInfoWindow().open(LatLng.newInstance(17.4, -41.0),
+		// lostVillageContent);
+		//
+		// Marker narrowsMarker = new Marker(LatLng.newInstance(13.18, -39));
+		// map.addOverlay(narrowsMarker);
 
-		Marker lostVillageMarker = new Marker(LatLng.newInstance(17.4, -41));
-		map.addOverlay(lostVillageMarker);
-		InfoWindowContent lostVillageContent = new InfoWindowContent("<b>The Lost Village</b>");
-		map.getInfoWindow().open(LatLng.newInstance(17.4, -41.0), lostVillageContent);
+		MapServiceAsync service = (MapServiceAsync) GWT.create(MapService.class);
+		ServiceDefTarget endpoint = (ServiceDefTarget) service;
+		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "mapservice");
 
-		Marker narrowsMarker = new Marker(LatLng.newInstance(13.18, -39));
-		map.addOverlay(narrowsMarker);
+		MapServiceAsyncCallback callback = new MapServiceAsyncCallback();
+
+		service.getAllMaps(callback);
 
 		// Add the map to the HTML host page
 		RootPanel.get().add(map);

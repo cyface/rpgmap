@@ -13,10 +13,11 @@ import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.client.entities.RPGMapMap;
 import com.cyface.rpg.map.client.entities.RPGMapPoint;
+import com.cyface.rpg.map.client.mapservice.MapService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("unchecked")
-public class MapServiceImpl extends RemoteServiceServlet {
+public class MapServiceImpl extends RemoteServiceServlet implements MapService {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceImpl.class);
 
@@ -25,16 +26,15 @@ public class MapServiceImpl extends RemoteServiceServlet {
 
 	@Override
 	public void init() throws ServletException {
+		logger.error("ABOUT TO INIT");
 		super.init();
 		emf = Persistence.createEntityManagerFactory("rpgmap");
 		em = emf.createEntityManager();
 	}
 
-	ArrayList<RPGMapMap> getAllMaps() {
+	public ArrayList<RPGMapMap> getAllMaps() {
 		ArrayList<RPGMapMap> resultList = new ArrayList<RPGMapMap>();
 		try {
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("rpgmap");
-			EntityManager em = emf.createEntityManager();
 			Query getAllMapsQuery = em.createNamedQuery("RPGMapMap.getAll");
 			List rawResultList = getAllMapsQuery.getResultList();
 			logger.debug(rawResultList);
@@ -45,11 +45,9 @@ public class MapServiceImpl extends RemoteServiceServlet {
 		return resultList;
 	}
 
-	ArrayList<RPGMapPoint> getAllPoints() {
+	public ArrayList<RPGMapPoint> getAllPoints() {
 		ArrayList<RPGMapPoint> resultList = new ArrayList<RPGMapPoint>();
 		try {
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("rpgmap");
-			EntityManager em = emf.createEntityManager();
 			Query getAllMapsQuery = em.createNamedQuery("RPGMapPoint.getAll");
 			List rawResultList = getAllMapsQuery.getResultList();
 			logger.debug(rawResultList);
