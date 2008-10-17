@@ -1,6 +1,7 @@
 package com.cyface.rpg.map.client.entities;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -35,7 +36,25 @@ public class RPGMapMap implements Serializable {
 
 	public String toString() {
 		StringBuffer outputBuffer = new StringBuffer();
-		outputBuffer.append("Map ID: " + getId() + " Name: " + getName() + " Owner ID: " + getOwnerId());
+		outputBuffer.append("Map ID: ");
+		outputBuffer.append(getId());
+		outputBuffer.append("\tName: ");
+		outputBuffer.append(getName()); 
+		outputBuffer.append("\tOwner ID: ");
+		outputBuffer.append(getOwnerId());
+		outputBuffer.append("\nPoints: \n");
+		Iterator<RPGMapPoint> childPointsIterator = getChildRPGMapPoints().iterator();
+		while (childPointsIterator.hasNext()) {
+			RPGMapPoint currentRPGMapPoint = childPointsIterator.next();
+			outputBuffer.append("\tName: ");
+			outputBuffer.append(currentRPGMapPoint.getName());
+			outputBuffer.append("\tLat/Lng: ");
+			outputBuffer.append(currentRPGMapPoint.getLatitude());
+			outputBuffer.append("/");
+			outputBuffer.append(currentRPGMapPoint.getLongitude());
+			outputBuffer.append("\n");
+		}
+		
 		return outputBuffer.toString();
 	}
 
