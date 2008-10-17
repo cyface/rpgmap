@@ -18,16 +18,9 @@
 
 CREATE TABLE `point` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
+  `parent_map_id` mediumint(8) unsigned NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `name` varchar(2000) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
--- 
--- Dumping data for table `point`
--- 
-
-INSERT INTO `point` (`id`, `latitude`, `longitude`, `name`) VALUES 
-(1, 31.00393, -131.00664, 'MyPoint'),
-(2, 31.00393, -131.00664, 'MyPoint');
