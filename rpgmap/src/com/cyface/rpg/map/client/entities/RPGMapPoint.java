@@ -13,9 +13,9 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "point", schema="rpgmap")
-@PersistenceUnit(name="rpgmap")
-@NamedQuery(name="RPGMapPoint.getAll", query="SELECT point FROM RPGMapPoint as point ORDER BY name")
+@Table(name = "point", schema = "rpgmap")
+@PersistenceUnit(name = "rpgmap")
+@NamedQuery(name = "RPGMapPoint.getAll", query = "SELECT point FROM RPGMapPoint as point ORDER BY name")
 public class RPGMapPoint implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 
@@ -25,7 +25,23 @@ public class RPGMapPoint implements Serializable {
 	private double longitude;
 	private String name;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	public String toString() {
+		StringBuffer outputBuffer = new StringBuffer();
+		outputBuffer.append("Point ID: ");
+		outputBuffer.append("\tName: ");
+		outputBuffer.append(getName());
+		outputBuffer.append("\tLat/Lng: ");
+		outputBuffer.append(getLatitude());
+		outputBuffer.append("/");
+		outputBuffer.append(getLongitude());
+		outputBuffer.append("\tParent Map Name: ");
+		outputBuffer.append(getParentRPGMapMap().getName());
+
+		return outputBuffer.toString();
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -57,13 +73,13 @@ public class RPGMapPoint implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@ManyToOne
-    @JoinColumn(name="parent_map_id")
+	@JoinColumn(name = "parent_map_id")
 	public RPGMapMap getParentRPGMapMap() {
 		return parentRPGMapMap;
 	}
-	
+
 	public void setParentRPGMapMap(RPGMapMap parentRPGMapMap) {
 		this.parentRPGMapMap = parentRPGMapMap;
 	}
