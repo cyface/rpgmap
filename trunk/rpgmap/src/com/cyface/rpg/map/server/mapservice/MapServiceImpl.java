@@ -28,7 +28,6 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 
 	@Override
 	public void init() throws ServletException {
-		logger.error("ABOUT TO INIT");
 		super.init();
 		emf = Persistence.createEntityManagerFactory("rpgmap");
 		em = emf.createEntityManager();
