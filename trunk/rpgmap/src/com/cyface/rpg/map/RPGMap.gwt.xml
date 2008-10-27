@@ -12,6 +12,7 @@
 
 	<!-- Other module inherits                                      -->
 
+	<!-- Hibernate4GWT Stuff -->
 	<inherits name='net.sf.hibernate4gwt.Hibernate4Gwt15' />
 	<inherits name='net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3' />
 
