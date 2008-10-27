@@ -12,17 +12,25 @@
 
 	<!-- Other module inherits                                      -->
 
+	<inherits name='net.sf.hibernate4gwt.Hibernate4Gwt15' />
+	<inherits name='net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3' />
 
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='com.cyface.rpg.map.client.RPGMap' />
+
+	<!-- Additional source path -->
+	<source path='domain' />
+	<source path='client' />
 
 	<!-- Specify the application specific style sheet.              -->
 	<stylesheet src='RPGMap.css' />
 
 	<inherits name="com.google.gwt.maps.GoogleMaps" />
-	<script src="http://maps.google.com/maps?gwt=1&amp;file=api&amp;v=2.x&amp;key=ABQIAAAApKHrTPdMsrKnaI74fSfnhBRJ6vaczIFad8NLczJmP_xNxLdKkRQ2eDyvYLxB63ODRNbb2KdYKhMUBw" />
-	
+	<script
+		src="http://maps.google.com/maps?gwt=1&amp;file=api&amp;v=2.x&amp;key=ABQIAAAApKHrTPdMsrKnaI74fSfnhBRJ6vaczIFad8NLczJmP_xNxLdKkRQ2eDyvYLxB63ODRNbb2KdYKhMUBw" />
+
 	<!-- The Map Service RPC -->
-	<servlet path="/mapservice" class="com.cyface.rpg.map.server.mapservice.MapServiceImpl" />
+	<servlet path="/mapservice"
+		class="com.cyface.rpg.map.server.mapservice.MapServiceImpl" />
 
 </module>
