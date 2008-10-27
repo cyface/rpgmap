@@ -1,4 +1,4 @@
-package com.cyface.rpg.map.client.entities;
+package com.cyface.rpg.map.domain.entities;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -16,11 +16,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
 
+import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
+
+
 @Entity
 @Table(name = "map", schema = "rpgmap")
 @PersistenceUnit(name = "rpgmap")
 @NamedQuery(name = "RPGMapMap.getAll", query = "SELECT map FROM RPGMapMap as map ORDER BY name")
-public class RPGMapMap implements Serializable {
+public class RPGMapMap extends LazyPojo implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 	private int id;
 	private int ownerId;

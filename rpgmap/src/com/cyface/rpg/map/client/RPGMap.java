@@ -80,7 +80,7 @@ public class RPGMap implements EntryPoint {
 		ServiceDefTarget endpoint = (ServiceDefTarget) service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "mapservice");
 
-		MapServiceAsyncCallback callback = new MapServiceAsyncCallback();
+		MapServiceAsyncCallback callback = new MapServiceAsyncCallback(map);
 
 		service.getAllMaps(callback);
 

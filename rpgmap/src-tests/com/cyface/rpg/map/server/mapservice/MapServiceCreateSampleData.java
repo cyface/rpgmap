@@ -10,8 +10,8 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 
-import com.cyface.rpg.map.client.entities.RPGMapMap;
-import com.cyface.rpg.map.client.entities.RPGMapPoint;
+import com.cyface.rpg.map.domain.entities.RPGMapMap;
+import com.cyface.rpg.map.domain.entities.RPGMapPoint;
 
 public class MapServiceCreateSampleData extends TestCase {
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceCreateSampleData.class);
