@@ -3,6 +3,7 @@ package com.cyface.rpg.map.client.mapservice;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.cyface.rpg.map.client.RPGMapMarkerClickHandler;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapPoint;
 import com.google.gwt.maps.client.MapWidget;
@@ -14,10 +15,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class MapServiceAsyncCallback implements AsyncCallback<ArrayList<RPGMapMap>> {
 
-	MapWidget parentMap;
+	MapWidget parentMapWidget;
 
 	public MapServiceAsyncCallback(MapWidget parentMap) {
-		this.parentMap = parentMap;
+		this.parentMapWidget = parentMap;
 	}
 
 	public void onFailure(Throwable error) {
@@ -26,7 +27,7 @@ public class MapServiceAsyncCallback implements AsyncCallback<ArrayList<RPGMapMa
 	}
 
 	public void onSuccess(ArrayList<RPGMapMap> rpgMapList) {
-		if (this.parentMap != null && rpgMapList != null) {
+		if (this.parentMapWidget != null && rpgMapList != null) {
 			Iterator<RPGMapMap> rpgMapListIterator = rpgMapList.iterator();
 			while (rpgMapListIterator.hasNext()) {
 				RPGMapMap currentMap = rpgMapListIterator.next();
@@ -37,8 +38,8 @@ public class MapServiceAsyncCallback implements AsyncCallback<ArrayList<RPGMapMa
 						MarkerOptions newMarkerOptions = MarkerOptions.newInstance();
 						newMarkerOptions.setTitle(currentPoint.getName());
 						Marker newMarker = new Marker(LatLng.newInstance(currentPoint.getLatitude(), currentPoint.getLongitude()), newMarkerOptions);
-						newMarker.addMarkerClickHandler(new RPGMapMarkerClickHandler(parentMap, currentMap, currentPoint));
-						parentMap.addOverlay(newMarker);
+						newMarker.addMarkerClickHandler(new RPGMapMarkerClickHandler(parentMapWidget, currentMap, currentPoint));
+						parentMapWidget.addOverlay(newMarker);
 					}
 				}
 			}

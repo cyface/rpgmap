@@ -65,16 +65,10 @@ public class RPGMap implements EntryPoint {
 		map.removeMapType(MapType.getHybridMap());
 
 		map.setCenter(LatLng.newInstance(centerLat, centerLon), initialZoom);
-
-		// Marker lostVillageMarker = new Marker(LatLng.newInstance(17.4, -41));
-		// map.addOverlay(lostVillageMarker);
-		// InfoWindowContent lostVillageContent = new
-		// InfoWindowContent("<b>The Lost Village</b>");
-		// map.getInfoWindow().open(LatLng.newInstance(17.4, -41.0),
-		// lostVillageContent);
-		//
-		// Marker narrowsMarker = new Marker(LatLng.newInstance(13.18, -39));
-		// map.addOverlay(narrowsMarker);
+		
+		map.addMapClickHandler(new RPGMapClickHandler(map));
+		map.addMapRightClickHandler(new RPGMapRightClickHandler(map));
+		map.addMapDragHandler(new RPGMapDragHandler(map));
 
 		MapServiceAsync service = (MapServiceAsync) GWT.create(MapService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) service;
