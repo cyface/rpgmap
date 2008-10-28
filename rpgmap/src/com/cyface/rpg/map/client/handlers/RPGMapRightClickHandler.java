@@ -1,11 +1,11 @@
-package com.cyface.rpg.map.client;
+package com.cyface.rpg.map.client.handlers;
 
+import com.cyface.rpg.map.client.contextmenu.RPGMapContextMenu;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.event.MapRightClickHandler;
 import com.google.gwt.maps.client.geom.Point;
 import com.google.gwt.maps.client.overlay.Marker;
 import com.google.gwt.maps.client.overlay.Overlay;
-import com.google.gwt.user.client.Window;
 
 public class RPGMapRightClickHandler implements MapRightClickHandler {
 
@@ -28,14 +28,14 @@ public class RPGMapRightClickHandler implements MapRightClickHandler {
 		
 		/* Check to see if they right-clicked on a Marker */
 		if (clickedOverlay != null && clickedOverlay instanceof Marker){
-			Window.alert("You right-clicked a marker");
+			Marker clickedMarker = (Marker) clickedOverlay;
+			RPGMapContextMenu.openMarkerMenu(parentMapWidget, clickedPoint, clickedMarker);
 			return;
 		}
 		
 		/* Otherwise, show the add menu */
 		if (clickedOverlay != null && clickedPoint != null){
-			//Window.alert("You right-clicked at " + clickedPoint.getX() + clickedPoint.getY());
-			RPGMapContextMenu.show(parentMapWidget, clickedPoint);
+			RPGMapContextMenu.openEmptySpaceMenu(parentMapWidget, clickedPoint);
 		}
 
 	}

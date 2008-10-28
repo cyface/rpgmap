@@ -1,4 +1,4 @@
-package com.cyface.rpg.map.client;
+package com.cyface.rpg.map.client.handlers;
 
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapPoint;
