@@ -1,10 +1,10 @@
 package com.cyface.rpg.map.client;
 
-import com.cyface.rpg.map.client.mapservice.MapService;
-import com.cyface.rpg.map.client.mapservice.MapServiceAsync;
-import com.cyface.rpg.map.client.mapservice.MapServiceAsyncCallback;
+import com.cyface.rpg.map.client.handlers.RPGMapClickHandler;
+import com.cyface.rpg.map.client.handlers.RPGMapDragHandler;
+import com.cyface.rpg.map.client.handlers.RPGMapRightClickHandler;
+import com.cyface.rpg.map.client.mapmanager.RPGMapManager;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.Copyright;
 import com.google.gwt.maps.client.CopyrightCollection;
 import com.google.gwt.maps.client.MapType;
@@ -15,7 +15,6 @@ import com.google.gwt.maps.client.control.LargeMapControl;
 import com.google.gwt.maps.client.control.MapTypeControl;
 import com.google.gwt.maps.client.geom.LatLng;
 import com.google.gwt.maps.client.geom.LatLngBounds;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -70,13 +69,7 @@ public class RPGMap implements EntryPoint {
 		map.addMapRightClickHandler(new RPGMapRightClickHandler(map));
 		map.addMapDragHandler(new RPGMapDragHandler(map));
 
-		MapServiceAsync service = (MapServiceAsync) GWT.create(MapService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) service;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "mapservice");
-
-		MapServiceAsyncCallback callback = new MapServiceAsyncCallback(map);
-
-		service.getAllMaps(callback);
+		RPGMapManager.init(map);
 
 		// Add the map to the HTML host page
 		RootPanel.get().add(map);

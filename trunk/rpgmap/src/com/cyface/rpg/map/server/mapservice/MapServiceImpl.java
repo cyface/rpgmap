@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.client.mapservice.MapService;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
-import com.cyface.rpg.map.domain.entities.RPGMapPoint;
 
 @SuppressWarnings("unchecked")
 public class MapServiceImpl extends HibernateRemoteService implements MapService {
@@ -46,17 +45,16 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		}
 		return resultList;
 	}
-
-	public ArrayList<RPGMapPoint> getAllPoints() {
-		ArrayList<RPGMapPoint> resultList = new ArrayList<RPGMapPoint>();
-		try {
-			Query getAllMapsQuery = em.createNamedQuery("SELECT point FROM RPGMapPoint as point ORDER BY name");
-			List rawResultList = getAllMapsQuery.getResultList();
-			logger.debug(rawResultList);
-			resultList.addAll(rawResultList);
-		} catch (Exception ex) {
-			logger.error(ex);
+	
+	public RPGMapMap saveMap(RPGMapMap mapToSave) {
+		if (mapToSave.getId() > 0)
+		{
+			return em.merge(mapToSave);
 		}
-		return resultList;
+		else	   
+		{
+			em.persist(mapToSave);
+			return mapToSave;
+		}
 	}
 }

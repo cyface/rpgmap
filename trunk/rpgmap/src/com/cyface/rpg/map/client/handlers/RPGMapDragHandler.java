@@ -1,5 +1,6 @@
-package com.cyface.rpg.map.client;
+package com.cyface.rpg.map.client.handlers;
 
+import com.cyface.rpg.map.client.contextmenu.RPGMapContextMenu;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.event.MapDragHandler;
 
