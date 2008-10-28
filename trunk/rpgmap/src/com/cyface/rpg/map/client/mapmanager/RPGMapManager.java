@@ -95,11 +95,12 @@ public class RPGMapManager {
 		RPGMapManager.getInstance().rpgMapList = rpgMapList;
 	}
 
-	public static void addOverlay(RPGMapMap parentRPGMap, Overlay overlayToAdd) {
+	public static void addOverlay(RPGMapMap parentRPGMap, Marker markerToAdd) {
 		RPGMapManager manager = RPGMapManager.getInstance();
 		
-		manager.parentMapWidget.addOverlay(overlayToAdd);
-		manager.overlayList.get(parentRPGMap).add(overlayToAdd);
+		manager.parentMapWidget.addOverlay(markerToAdd);
+		manager.overlayList.get(parentRPGMap).add(markerToAdd);
+		parentRPGMap.addChildMarker(markerToAdd);
 	}
 
 	public static void saveMap(RPGMapMap parentRPGMapMap) {

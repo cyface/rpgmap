@@ -7,11 +7,13 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import junit.framework.TestCase;
+import net.sf.hibernate4gwt.core.HibernateBeanManager;
 
 import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapPoint;
+
 
 public class MapServiceCreateSampleData extends TestCase {
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceCreateSampleData.class);
@@ -22,6 +24,7 @@ public class MapServiceCreateSampleData extends TestCase {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("rpgmap");
 			EntityManager em = emf.createEntityManager();
 			EntityTransaction et = em.getTransaction();
+			HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
 			et.begin();
 			
 			//Clean out the table
@@ -33,6 +36,16 @@ public class MapServiceCreateSampleData extends TestCase {
 			mainMap.setName("Return to Northmoor");
 			mainMap.setOwnerId(1);
 			em.persist(mainMap);
+			
+			RPGMapMap secondaryMap = new RPGMapMap();
+			secondaryMap.setName("Return to Northmoor GM Only");
+			secondaryMap.setOwnerId(1);
+			RPGMapPoint newPoint = new RPGMapPoint();
+			newPoint.setLatitude(13.18);
+			newPoint.setLongitude(-39.0);
+			newPoint.setName("The Narrows");
+			secondaryMap.addChildRPGMapPoint(newPoint);
+			em.persist(secondaryMap);
 			
 			// Commit and Clean-Up
 			et.commit();
@@ -52,8 +65,8 @@ public class MapServiceCreateSampleData extends TestCase {
 			et.begin();
 			
 			//Clean out the table
-			Query truncPointTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.point");
-			truncPointTableQuery.executeUpdate();
+			//Query truncPointTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.point");
+			//truncPointTableQuery.executeUpdate();
 			
 			RPGMapMap mainMap = em.find(RPGMapMap.class, new Integer(1));
 			
@@ -65,12 +78,12 @@ public class MapServiceCreateSampleData extends TestCase {
 			lostVillagePoint.setParentRPGMapMap(mainMap);
 			em.persist(lostVillagePoint);
 			
-			RPGMapPoint narrowsPoint = new RPGMapPoint();
-			narrowsPoint.setName("The Narrows");
-			narrowsPoint.setLatitude(13.18);
-			narrowsPoint.setLongitude(-39.0);
-			narrowsPoint.setParentRPGMapMap(mainMap);
-			em.persist(narrowsPoint);
+			RPGMapPoint newPoint = new RPGMapPoint();
+			newPoint.setLatitude(13.18);
+			newPoint.setLongitude(-39.0);
+			newPoint.setName("The Narrows");
+			mainMap.addChildRPGMapPoint(newPoint);
+			em.merge(mainMap);
 			
 			// Commit and Clean-Up
 			et.commit();

@@ -1,6 +1,7 @@
 package com.cyface.rpg.map.domain.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceUnit;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
+import com.google.gwt.maps.client.overlay.Marker;
 
 @Entity
 @Table(name = "map", schema = "rpgmap")
@@ -42,7 +45,7 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		outputBuffer.append("Map ID: ");
 		outputBuffer.append(getId());
 		outputBuffer.append("\tName: ");
-		outputBuffer.append(getName()); 
+		outputBuffer.append(getName());
 		outputBuffer.append("\tOwner ID: ");
 		outputBuffer.append(getOwnerId());
 		outputBuffer.append("\nPoints: \n");
@@ -57,7 +60,7 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 			outputBuffer.append(currentRPGMapPoint.getLongitude());
 			outputBuffer.append("\n");
 		}
-		
+
 		return outputBuffer.toString();
 	}
 
@@ -89,11 +92,38 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapMap", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID")
 	public Set<RPGMapPoint> getChildRPGMapPoints() {
 		return childRPGMapPoints;
 	}
 
+	@OneToMany(mappedBy = "parentRPGMapMap", cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID")
 	public void setChildRPGMapPoints(Set<RPGMapPoint> childRPGMapPoints) {
 		this.childRPGMapPoints = childRPGMapPoints;
+	}
+
+	public void addChildRPGMapPoint(RPGMapPoint pointToAdd) {
+		pointToAdd.setParentRPGMapMap(this);
+		if (this.childRPGMapPoints == null) {
+			this.childRPGMapPoints = new HashSet<RPGMapPoint>();
+		}
+		this.childRPGMapPoints.add(pointToAdd);
+	}
+
+	public void addChildMarker(Marker markerToAdd) {
+		RPGMapPoint newPoint = new RPGMapPoint();
+		newPoint.setLatitude(markerToAdd.getLatLng().getLatitude());
+		newPoint.setLongitude(markerToAdd.getLatLng().getLongitude());
+		if (markerToAdd.getTitle() != null) {
+			newPoint.setName(markerToAdd.getTitle());
+		} else {
+			newPoint.setName("No Name Yet");
+		}
+		newPoint.setParentRPGMapMap(this);
+		if (this.childRPGMapPoints == null) {
+			this.childRPGMapPoints = new HashSet<RPGMapPoint>();
+		}
+		this.childRPGMapPoints.add(newPoint);
 	}
 }

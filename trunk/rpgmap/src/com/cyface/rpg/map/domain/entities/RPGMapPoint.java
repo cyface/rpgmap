@@ -85,6 +85,8 @@ public class RPGMapPoint extends LazyPojo implements Serializable {
 		return parentRPGMapMap;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "parent_map_id")
 	public void setParentRPGMapMap(RPGMapMap parentRPGMapMap) {
 		this.parentRPGMapMap = parentRPGMapMap;
 	}
