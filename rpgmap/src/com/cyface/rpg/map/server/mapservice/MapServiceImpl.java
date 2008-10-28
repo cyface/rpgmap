@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
@@ -45,16 +46,16 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		}
 		return resultList;
 	}
-	
+
 	public RPGMapMap saveMap(RPGMapMap mapToSave) {
-		if (mapToSave.getId() > 0)
-		{
-			return em.merge(mapToSave);
-		}
-		else	   
-		{
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		if (mapToSave.getId() > 0) {
+			em.merge(mapToSave);
+		} else {
 			em.persist(mapToSave);
-			return mapToSave;
 		}
+		et.commit();
+		return mapToSave;
 	}
 }
