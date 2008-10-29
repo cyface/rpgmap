@@ -1,7 +1,7 @@
 package com.cyface.rpg.map.client.handlers;
 
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
-import com.cyface.rpg.map.domain.entities.RPGMapPoint;
+import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.google.gwt.maps.client.InfoWindow;
 import com.google.gwt.maps.client.InfoWindowContent;
 import com.google.gwt.maps.client.MapWidget;
@@ -12,9 +12,9 @@ public class RPGMapMarkerClickHandler implements MarkerClickHandler {
 
 	MapWidget parentMapWidget;
 	RPGMapMap parentRPGMapMap;
-	RPGMapPoint parentRPGMapPoint;
+	RPGMapOverlay parentRPGMapPoint;
 
-	public RPGMapMarkerClickHandler(MapWidget parentMapWidget, RPGMapMap parentRPGMapMap, RPGMapPoint parentRPGMapPoint) {
+	public RPGMapMarkerClickHandler(MapWidget parentMapWidget, RPGMapMap parentRPGMapMap, RPGMapOverlay parentRPGMapPoint) {
 		this.parentMapWidget = parentMapWidget;
 		this.parentRPGMapMap = parentRPGMapMap;
 		this.parentRPGMapPoint = parentRPGMapPoint;
