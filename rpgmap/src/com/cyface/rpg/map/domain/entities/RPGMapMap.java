@@ -1,6 +1,7 @@
 package com.cyface.rpg.map.domain.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -12,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceUnit;
@@ -31,7 +31,8 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 	private int id;
 	private int ownerId;
 	private String name;
-	private Set<RPGMapPoint> childRPGMapPoints;
+	private Set<RPGMapOverlay> childRPGMapOverlays;
+	private Date lastUpdated;
 
 	public RPGMapMap() {
 	}
@@ -42,23 +43,20 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 
 	public String toString() {
 		StringBuffer outputBuffer = new StringBuffer();
-		outputBuffer.append("Map ID: ");
+		outputBuffer.append("\nMap ID: ");
 		outputBuffer.append(getId());
 		outputBuffer.append("\tName: ");
 		outputBuffer.append(getName());
 		outputBuffer.append("\tOwner ID: ");
 		outputBuffer.append(getOwnerId());
-		outputBuffer.append("\nPoints: \n");
-		Iterator<RPGMapPoint> childPointsIterator = getChildRPGMapPoints().iterator();
-		while (childPointsIterator.hasNext()) {
-			RPGMapPoint currentRPGMapPoint = childPointsIterator.next();
-			outputBuffer.append("\tName: ");
-			outputBuffer.append(currentRPGMapPoint.getName());
-			outputBuffer.append("\tLat/Lng: ");
-			outputBuffer.append(currentRPGMapPoint.getLatitude());
-			outputBuffer.append("/");
-			outputBuffer.append(currentRPGMapPoint.getLongitude());
-			outputBuffer.append("\n");
+		outputBuffer.append("\tLast Updated: ");
+		outputBuffer.append(getLastUpdated());
+		outputBuffer.append("\nOverlays: ");
+		outputBuffer.append("(" + getChildRPGMapOverlays().size() + ")\n" );
+		Iterator<RPGMapOverlay> childOverlaysIterator = getChildRPGMapOverlays().iterator();
+		while (childOverlaysIterator.hasNext()) {
+			RPGMapOverlay currentRPGMapOverlay = childOverlaysIterator.next();
+			outputBuffer.append(currentRPGMapOverlay);
 		}
 
 		return outputBuffer.toString();
@@ -91,39 +89,45 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		this.name = name;
 	}
 
+	@Column(name = "LAST_UPDATED")
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	@SuppressWarnings("unused")
+	@Column(name = "LAST_UPDATED")
+	private void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
 	@OneToMany(mappedBy = "parentRPGMapMap", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID")
-	public Set<RPGMapPoint> getChildRPGMapPoints() {
-		return childRPGMapPoints;
+	public Set<RPGMapOverlay> getChildRPGMapOverlays() {
+		return childRPGMapOverlays;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapMap", cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID")
-	public void setChildRPGMapPoints(Set<RPGMapPoint> childRPGMapPoints) {
-		this.childRPGMapPoints = childRPGMapPoints;
+	public void setChildRPGMapOverlays(Set<RPGMapOverlay> childRPGMapOverlays) {
+		this.childRPGMapOverlays = childRPGMapOverlays;
 	}
 
-	public void addChildRPGMapPoint(RPGMapPoint pointToAdd) {
+	public void addChildRPGMapOverlay(RPGMapOverlay pointToAdd) {
 		pointToAdd.setParentRPGMapMap(this);
-		if (this.childRPGMapPoints == null) {
-			this.childRPGMapPoints = new HashSet<RPGMapPoint>();
+		if (this.childRPGMapOverlays == null) {
+			this.childRPGMapOverlays = new HashSet<RPGMapOverlay>();
 		}
-		this.childRPGMapPoints.add(pointToAdd);
+		this.childRPGMapOverlays.add(pointToAdd);
 	}
 
 	public void addChildMarker(Marker markerToAdd) {
-		RPGMapPoint newPoint = new RPGMapPoint();
-		newPoint.setLatitude(markerToAdd.getLatLng().getLatitude());
-		newPoint.setLongitude(markerToAdd.getLatLng().getLongitude());
+		RPGMapOverlay newMarker = new RPGMapOverlay();
+		newMarker.setLatitude(markerToAdd.getLatLng().getLatitude());
+		newMarker.setLongitude(markerToAdd.getLatLng().getLongitude());
+		newMarker.setType(RPGMapOverlay.MARKER_TYPE);
 		if (markerToAdd.getTitle() != null) {
-			newPoint.setName(markerToAdd.getTitle());
+			newMarker.setName(markerToAdd.getTitle());
 		} else {
-			newPoint.setName("No Name Yet");
+			newMarker.setName("No Name Yet");
 		}
-		newPoint.setParentRPGMapMap(this);
-		if (this.childRPGMapPoints == null) {
-			this.childRPGMapPoints = new HashSet<RPGMapPoint>();
-		}
-		this.childRPGMapPoints.add(newPoint);
+		this.addChildRPGMapOverlay(newMarker);
 	}
 }

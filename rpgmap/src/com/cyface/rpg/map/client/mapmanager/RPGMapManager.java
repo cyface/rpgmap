@@ -11,7 +11,7 @@ import com.cyface.rpg.map.client.mapservice.MapServiceAsync;
 import com.cyface.rpg.map.client.mapservice.MapServiceGetAllMapsAsyncCallback;
 import com.cyface.rpg.map.client.mapservice.MapServiceSaveMapAsyncCallback;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
-import com.cyface.rpg.map.domain.entities.RPGMapPoint;
+import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.geom.LatLng;
@@ -55,13 +55,13 @@ public class RPGMapManager {
 
 	public static void plotMapItems(RPGMapMap mapToPlot) {
 		RPGMapManager manager = RPGMapManager.getInstance();
-		Set<RPGMapPoint> childMapPoints = mapToPlot.getChildRPGMapPoints();
+		Set<RPGMapOverlay> childMapPoints = mapToPlot.getChildRPGMapOverlays();
 
 		if (manager.parentMapWidget != null && mapToPlot != null && childMapPoints != null) {
 			ArrayList<Overlay> childPointOverlayList = new ArrayList<Overlay>();
-			Iterator<RPGMapPoint> childPointsIterator = childMapPoints.iterator();
+			Iterator<RPGMapOverlay> childPointsIterator = childMapPoints.iterator();
 			while (childPointsIterator.hasNext()) {
-				RPGMapPoint currentPoint = childPointsIterator.next();
+				RPGMapOverlay currentPoint = childPointsIterator.next();
 				MarkerOptions newMarkerOptions = MarkerOptions.newInstance();
 				newMarkerOptions.setTitle(currentPoint.getName());
 				Marker newMarker = new Marker(LatLng.newInstance(currentPoint.getLatitude(), currentPoint.getLongitude()), newMarkerOptions);

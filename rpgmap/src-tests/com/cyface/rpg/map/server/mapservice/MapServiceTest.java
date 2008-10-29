@@ -30,21 +30,4 @@ public class MapServiceTest extends TestCase {
 		}
 		assertNotNull(mapListIterator);
 	}
-	
-	public void updateOneMap() {
-		MapServiceImpl mapService = new MapServiceImpl();
-		try {
-			mapService.init();
-		} catch (ServletException e) {
-			logger.error(e);
-		}
-		ArrayList<RPGMapMap> mapList = mapService.getAllMaps();
-
-		Iterator<RPGMapMap> mapListIterator = mapList.iterator();
-		while (mapListIterator.hasNext()) {
-			RPGMapMap currentMap = mapListIterator.next();
-			logger.debug(currentMap);
-		}
-		assertNotNull(mapListIterator);
-	}
 }
