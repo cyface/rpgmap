@@ -3,6 +3,7 @@
     <wb-module deploy-name="rpgmap">
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/META-INF"/>
         <property name="context-root" value="rpgmap"/>
         <property name="java-output-path" value="build/classes"/>
     </wb-module>
