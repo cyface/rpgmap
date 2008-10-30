@@ -202,5 +202,16 @@
 			<artifactId>gwt-servlet</artifactId>
 			<version>1.5.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>1.5.3</version>
+			<classifier>windows</classifier>
+		</dependency>
 	</dependencies>
 </project>
