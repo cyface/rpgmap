@@ -1,0 +1,5 @@
+<script language=javascript>
+        _velocity_console = window.open("",true,"width=680,height=600,resizable,scrollbars=yes");
+        _velocity_console.document.write("<html><head><title>Velocity Debug Console</title></head><body bgcolor=#ffffff>");
+        _velocity_console.document.write("<h1>Parsing this file is now deprecated.  Please use the #showDebugPopup() macro instead</h1></body></html>");
+</script>
