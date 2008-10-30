@@ -52,8 +52,58 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>com.totsp.gwt</groupId>
+                <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+                <version>2.0-beta24</version>
+                <configuration>
+                    <compileTargets>
+                        <value>com.cyface.rpg.map.RPGMap</value>
+                    </compileTargets>
+                    <runTarget>com.cyface.rpg.map.RPGMap/RPGMap.html</runTarget>
+                    <logLevel>INFO</logLevel>
+                    <style>DETAILED</style>
+                    <noServer>false</noServer>
+                    <extraJvmArgs>-Xmx512m</extraJvmArgs>
+                    <gwtVersion>${gwtVersion}</gwtVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                    	<phase>post-clean</phase>
+                        <goals>
+                            <goal>mergewebxml</goal>
+                            <!--<goal>i18n</goal>-->
+                            <goal>compile</goal>                            
+                            <goal>gwt</goal>                            
+                            <!-- <goal>test</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>hibernate4gwt</id>
+			<name>hibernate4gwt</name>
+			<url>http://hibernate4gwt.svn.sourceforge.net/svnroot/hibernate4gwt/maven/</url>
+		</repository>
+		<repository>
+			<id>gwt-maven</id>
+			<name>gwt-maven</name>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</repository>
+		<repository>
+			<id>gwt-local</id>
+			<name>gwt-local</name>
+			<url>http://rpgmap.googlecode.com/svn/trunk/rpgmap/maven</url>
+		</repository>
+		<repository>
+			<id>jboss.org</id>
+			<name>jboss.org</name>
+			<url>http://repository.jboss.org/maven2</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>javax.persistence</groupId>
@@ -63,17 +113,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.2.1.ga</version>
+			<version>3.2.6.ga</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.2.1.ga</version>
+			<version>3.3.2.GA</version>
 		</dependency>
 		<dependency>
-			<groupId>hibernate-commons-annotations</groupId>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.2.1.ga</version>
+			<version>3.3.0.ga</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -112,16 +162,45 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5</version>
-			<optional>false</optional>
+			<groupId>net.sf.hibernate4gwt</groupId>
+			<artifactId>hibernate4gwt</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>velocity</groupId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-maps</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity-tools</artifactId>
 			<version>2.0-beta2</version>
-			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>1.5.3</version>
 		</dependency>
 	</dependencies>
 </project>
