@@ -110,6 +110,7 @@ public class RPGMapOverlay extends LazyPojo implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "parent_map_id")
 	public RPGMapMap getParentRPGMapMap() {
 		return parentRPGMapMap;
 	}
