@@ -213,5 +213,16 @@
 			<version>1.5.3</version>
 			<classifier>windows</classifier>
 		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>1.5.3</version>
+			<type>zip</type>
+			<classifier>windows-libs</classifier>
+		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
 </project>
