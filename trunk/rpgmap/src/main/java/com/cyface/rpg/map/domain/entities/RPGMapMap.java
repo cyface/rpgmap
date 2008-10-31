@@ -101,11 +101,13 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapMap", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Column (name = "parent_map_id")
 	public Set<RPGMapOverlay> getChildRPGMapOverlays() {
 		return childRPGMapOverlays;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapMap", cascade = CascadeType.ALL)
+	@Column (name = "parent_map_id")
 	public void setChildRPGMapOverlays(Set<RPGMapOverlay> childRPGMapOverlays) {
 		this.childRPGMapOverlays = childRPGMapOverlays;
 	}
