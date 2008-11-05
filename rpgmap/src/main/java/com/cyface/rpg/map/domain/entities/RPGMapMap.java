@@ -13,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceUnit;
@@ -29,8 +31,8 @@ import com.google.gwt.maps.client.overlay.Marker;
 public class RPGMapMap extends LazyPojo implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 	private int id;
-	private int ownerId;
 	private String name;
+	private RPGMapUser parentRPGMapUser;
 	private Set<RPGMapOverlay> childRPGMapOverlays;
 	private Date lastUpdated;
 
@@ -47,8 +49,8 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		outputBuffer.append(getId());
 		outputBuffer.append("\tName: ");
 		outputBuffer.append(getName());
-		outputBuffer.append("\tOwner ID: ");
-		outputBuffer.append(getOwnerId());
+		outputBuffer.append("\tOwner: ");
+		outputBuffer.append(getParentRPGMapUser());
 		outputBuffer.append("\tLast Updated: ");
 		outputBuffer.append(getLastUpdated());
 		outputBuffer.append("\nOverlays: ");
@@ -72,15 +74,6 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "OWNER_ID")
-	public int getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -89,13 +82,25 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "LAST_UPDATED")
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	public void setParentRPGMapUser(RPGMapUser parentRPGMapUser) {
+		this.parentRPGMapUser = parentRPGMapUser;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	public RPGMapUser getParentRPGMapUser() {
+		return parentRPGMapUser;
+	}
+
+	@Column(name = "last_updated")
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
 
 	@SuppressWarnings("unused")
-	@Column(name = "LAST_UPDATED")
+	@Column(name = "last_updated")
 	private void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}

@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
+import com.cyface.rpg.map.domain.entities.RPGMapUser;
 
 public class MapServiceCreateSampleData extends TestCase {
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceCreateSampleData.class);
@@ -27,25 +28,35 @@ public class MapServiceCreateSampleData extends TestCase {
 			EntityTransaction et = em.getTransaction();
 			HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
 			et.begin();
+			
+			// Clean out the user table
+			Query truncMapTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.user");
+			truncMapTableQuery.executeUpdate();
 
 			// Clean out the map table
-			Query truncMapTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.map");
-			truncMapTableQuery.executeUpdate();
+			Query truncUserTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.map");
+			truncUserTableQuery.executeUpdate();
 
 			// Clean out the overlay table
 			Query truncPointTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.overlay");
 			truncPointTableQuery.executeUpdate();
+			
+			// Create the user
+			RPGMapUser mainUser = new RPGMapUser();
+			mainUser.setName("Tim White");
+			mainUser.setUserId("cyface");
+			em.persist(mainUser);
 
-			// Create the record
+			// Create the map
 			RPGMapMap mainMap = new RPGMapMap();
 			mainMap.setName("Return to Northmoor");
-			mainMap.setOwnerId(1);
+			mainMap.setParentRPGMapUser(mainUser);
 			em.persist(mainMap);
 
 			/* Create second map with child overlays */
 			RPGMapMap secondaryMap = new RPGMapMap();
 			secondaryMap.setName("Return to Northmoor GM Only");
-			secondaryMap.setOwnerId(1);
+			secondaryMap.setParentRPGMapUser(mainUser);
 
 			RPGMapOverlay narrowsMarker = new RPGMapOverlay();
 			narrowsMarker.setName("The Narrows 2");
@@ -71,12 +82,10 @@ public class MapServiceCreateSampleData extends TestCase {
 			RPGMapMap mainMapVerify = em.find(RPGMapMap.class, new Integer(1));
 			assertNotNull(mainMapVerify);
 			assertEquals("Return to Northmoor", mainMapVerify.getName());
-			assertEquals(1, mainMapVerify.getOwnerId());
 
 			RPGMapMap secondaryMapVerify = em.find(RPGMapMap.class, new Integer(2));
 			assertNotNull(secondaryMapVerify);
 			assertEquals("Return to Northmoor GM Only", secondaryMapVerify.getName());
-			assertEquals(1, secondaryMapVerify.getOwnerId());
 			assertEquals(2, secondaryMapVerify.getChildRPGMapOverlays().size());
 
 			em.close();
@@ -98,7 +107,6 @@ public class MapServiceCreateSampleData extends TestCase {
 			RPGMapMap mainMap = em.find(RPGMapMap.class, new Integer(1));
 			assertNotNull(mainMap);
 			assertEquals("Return to Northmoor", mainMap.getName());
-			assertEquals(1, mainMap.getOwnerId());
 
 			/* Persist a point using the parent class */
 			RPGMapOverlay narrowsMarker = new RPGMapOverlay();
@@ -128,7 +136,6 @@ public class MapServiceCreateSampleData extends TestCase {
 			logger.debug(mainMapVerify);
 			assertNotNull(mainMapVerify);
 			assertEquals("Return to Northmoor", mainMapVerify.getName());
-			assertEquals(1, mainMapVerify.getOwnerId());
 			Set<RPGMapOverlay> mainMapChildOverlays = mainMapVerify.getChildRPGMapOverlays();
 			assertEquals(2, mainMapChildOverlays.size());
 			Iterator<RPGMapOverlay> mainMapChildOverlaysIterator = mainMapChildOverlays.iterator();
