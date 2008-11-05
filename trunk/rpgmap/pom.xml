@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>RPGMap</groupId>
+	<groupId>cyface.com</groupId>
 	<artifactId>RPGMap</artifactId>
 	<packaging>war</packaging>
 	<name>RPGMap</name>
@@ -50,6 +50,7 @@
 	</properties>
 
 	<build>
+		<finalName>RPGMap</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -137,14 +138,6 @@
 				tell the war plugin to use it. Also, exclude what you want from the
 				final artifact here.
 			-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webXml>target/web.xml</webXml>
-					<warSourceExcludes>.gwt-tmp/**</warSourceExcludes>
-				</configuration>
-			</plugin>
 			<!--  tell the compiler we can use 1.5 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -158,6 +151,71 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.0.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-meta-inf-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/tomcat/webapps/ROOT/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+									<filtering>true</filtering>
+									<includes>
+										<include>META-INF/*.xml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-web-inf-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/tomcat/webapps/ROOT/WEB-INF/classes</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+									<excludes>
+										<exclude>META-INF/*.xml</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-web-inf-classes-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/tomcat/webapps/ROOT/WEB-INF/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+									<excludes>
+										<exclude>META-INF/*.xml</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -382,8 +440,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-		</dependencies>
-	</dependencyManagement>
 </project>
