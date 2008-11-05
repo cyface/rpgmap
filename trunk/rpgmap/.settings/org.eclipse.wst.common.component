@@ -4,6 +4,8 @@
 		<wb-resource deploy-path="/" source-path="/src/main/webapp" />
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources" />
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java" />
+		<wb-resource deploy-path="/" source-path="/target/RPGMap/com.cyface.rpg.map.RPGMap" />
+		<wb-resource deploy-path="/" source-path="/target/RPGMap/com.cyface.rpg.map.RPGMap-aux" />
 		<property name="java-output-path" />
 		<property name="context-root" value="rpgmap" />
 	</wb-module>
