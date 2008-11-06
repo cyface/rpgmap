@@ -10,7 +10,7 @@
 		<custom-authentication-provider />
 	</beans:bean>
 
-	<beans:bean id="passwordEncoder" class="com.cyface.rpg.map.server.mapservice.ClearPasswordEncoder" />
+	<beans:bean id="passwordEncoder" class="com.cyface.rpg.map.server.mapservice.BCryptPasswordEncoder" />
 
 	<beans:bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
 		<beans:property name="providers">
