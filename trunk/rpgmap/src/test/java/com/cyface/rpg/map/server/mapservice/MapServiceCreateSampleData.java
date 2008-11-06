@@ -45,6 +45,7 @@ public class MapServiceCreateSampleData extends TestCase {
 			RPGMapUser mainUser = new RPGMapUser();
 			mainUser.setName("Tim White");
 			mainUser.setUserId("cyface");
+			mainUser.setPassword("test");
 			em.persist(mainUser);
 
 			// Create the map
@@ -75,6 +76,9 @@ public class MapServiceCreateSampleData extends TestCase {
 			secondaryMap.addChildRPGMapOverlay(lostVillageMarker);
 
 			em.persist(secondaryMap);
+			
+			mainUser.addChildRPGMapMap(mainMap);
+			mainUser.addChildRPGMapMap(secondaryMap);
 
 			/* Commit and Clean-Up */
 			et.commit();
@@ -98,6 +102,7 @@ public class MapServiceCreateSampleData extends TestCase {
 	public void testAddOverlaysToExistingMaps() {
 		try {
 			// SetUp
+			logger.debug("********** Starting testAddOverlaysToExistingMaps ****************");
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("rpgmap");
 			EntityManager em = emf.createEntityManager();
 			EntityTransaction et = em.getTransaction();
@@ -107,6 +112,7 @@ public class MapServiceCreateSampleData extends TestCase {
 			RPGMapMap mainMap = em.find(RPGMapMap.class, new Integer(1));
 			assertNotNull(mainMap);
 			assertEquals("Return to Northmoor", mainMap.getName());
+			assertEquals(1, mainMap.getParentRPGMapUser().getId());
 
 			/* Persist a point using the parent class */
 			RPGMapOverlay narrowsMarker = new RPGMapOverlay();
@@ -136,6 +142,7 @@ public class MapServiceCreateSampleData extends TestCase {
 			logger.debug(mainMapVerify);
 			assertNotNull(mainMapVerify);
 			assertEquals("Return to Northmoor", mainMapVerify.getName());
+			assertEquals(1, mainMapVerify.getParentRPGMapUser().getId());
 			Set<RPGMapOverlay> mainMapChildOverlays = mainMapVerify.getChildRPGMapOverlays();
 			assertEquals(2, mainMapChildOverlays.size());
 			Iterator<RPGMapOverlay> mainMapChildOverlaysIterator = mainMapChildOverlays.iterator();
@@ -151,11 +158,11 @@ public class MapServiceCreateSampleData extends TestCase {
 					fail("Extra or missing overlay found");
 				}
 			}
-			logger.debug("pre close");
+			logger.debug("********** Ending testAddOverlaysToExistingMaps ****************");
 			em.close();
 			emf.close();
 		} catch (Exception e) {
-			logger.error("Error running add Overlays Test", e);
+			logger.error("!!!!!!!!! Error Running testAddOverlaysToExistingMaps !!!!!!!!!!!!!!!", e);
 		}
 	}
 }

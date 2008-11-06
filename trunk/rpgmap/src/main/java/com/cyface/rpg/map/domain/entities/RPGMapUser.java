@@ -123,12 +123,12 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 		this.childRPGMapMaps = childRPGMapMaps;
 	}
 
-	public void addChildRPGMapMap(RPGMapMap pointToAdd) {
-		pointToAdd.setParentRPGMapUser(this);
+	public void addChildRPGMapMap(RPGMapMap mapToAdd) {
+		mapToAdd.setParentRPGMapUser(this);
 		if (this.childRPGMapMaps == null) {
 			this.childRPGMapMaps = new HashSet<RPGMapMap>();
 		}
-		this.childRPGMapMaps.add(pointToAdd);
+		this.childRPGMapMaps.add(mapToAdd);
 	}
 
 }
