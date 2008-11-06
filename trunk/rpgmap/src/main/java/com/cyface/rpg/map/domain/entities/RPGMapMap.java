@@ -50,7 +50,7 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		outputBuffer.append("\tName: ");
 		outputBuffer.append(getName());
 		outputBuffer.append("\tOwner: ");
-		outputBuffer.append(getParentRPGMapUser().getId() + "/" +getParentRPGMapUser().getUserId() + "/" + getParentRPGMapUser().getName());
+		outputBuffer.append(getParentRPGMapUser().getId() + "/" +getParentRPGMapUser().getUsername() + "/" + getParentRPGMapUser().getName());
 		outputBuffer.append("\tLast Updated: ");
 		outputBuffer.append(getLastUpdated());
 		outputBuffer.append("\nOverlays: ");
