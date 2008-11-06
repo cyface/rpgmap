@@ -45,7 +45,8 @@ public class MapServiceCreateSampleData extends TestCase {
 			RPGMapUser mainUser = new RPGMapUser();
 			mainUser.setName("Tim White");
 			mainUser.setUsername("cyface");
-			mainUser.setPassword("test");
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			mainUser.setPassword(encoder.encodePassword("test", null));
 			em.persist(mainUser);
 
 			// Create the map
