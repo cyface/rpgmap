@@ -44,7 +44,7 @@ public class MapServiceCreateSampleData extends TestCase {
 			// Create the user
 			RPGMapUser mainUser = new RPGMapUser();
 			mainUser.setName("Tim White");
-			mainUser.setUserId("cyface");
+			mainUser.setUsername("cyface");
 			mainUser.setPassword("test");
 			em.persist(mainUser);
 
@@ -76,9 +76,6 @@ public class MapServiceCreateSampleData extends TestCase {
 			secondaryMap.addChildRPGMapOverlay(lostVillageMarker);
 
 			em.persist(secondaryMap);
-			
-			mainUser.addChildRPGMapMap(mainMap);
-			mainUser.addChildRPGMapMap(secondaryMap);
 
 			/* Commit and Clean-Up */
 			et.commit();

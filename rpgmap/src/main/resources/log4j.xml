@@ -18,6 +18,9 @@
 <category name="com.cyface">
    <priority value="DEBUG"/>
 </category>
+<category name="org.springframework">
+   <priority value="DEBUG"/>
+</category>
 <!-- Otherwise we will only display ERROR messages -->
 <root>
    <priority value ="ERROR" />

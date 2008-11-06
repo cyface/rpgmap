@@ -27,9 +27,10 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 public class RPGMapUser extends LazyPojo implements Serializable {
 	private static final long serialVersionUID = -7201186159122319296L;
 	private int id;
-	private String userId;
+	private String username;
 	private String name;
 	private String password;
+	private boolean enabled = true;
 	private Set<RPGMapMap> childRPGMapMaps;
 	private Date lastUpdated;
 
@@ -45,15 +46,15 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 		outputBuffer.append("\nRecord ID: ");
 		outputBuffer.append(getId());
 		outputBuffer.append("\tUser ID: ");
-		outputBuffer.append(getUserId());
+		outputBuffer.append(getUsername());
 		outputBuffer.append("\tName: ");
 		outputBuffer.append(getName());
 		outputBuffer.append("\tPassword: ");
 		outputBuffer.append(getPassword());
 		outputBuffer.append("\tLast Updated: ");
 		outputBuffer.append(getLastUpdated());
-		outputBuffer.append("\nOverlays: ");
-		outputBuffer.append("(" + getChildRPGMapMaps().size() + ")\n" );
+		outputBuffer.append("\nMaps: ");
+		outputBuffer.append("(" + getChildRPGMapMaps().size() + ")\n");
 		Iterator<RPGMapMap> childMapsIterator = getChildRPGMapMaps().iterator();
 		while (childMapsIterator.hasNext()) {
 			RPGMapMap currentRPGMapMap = childMapsIterator.next();
@@ -73,7 +74,6 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 		this.id = id;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -81,17 +81,7 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Column(name = "user_id")
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	@Column(name = "user_id")
-	public String getUserId() {
-		return userId;
-	}
-
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -100,25 +90,41 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 		return password;
 	}
 
-	@Column(name = "LAST_UPDATED")
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	@Column(name = "last_updated")
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
 
 	@SuppressWarnings("unused")
-	@Column(name = "LAST_UPDATED")
+	@Column(name = "last_updated")
 	private void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Column (name = "owner_id")
+	@Column(name = "owner_id")
 	public Set<RPGMapMap> getChildRPGMapMaps() {
 		return childRPGMapMaps;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Column (name = "owner_id")
+	@Column(name = "owner_id")
 	public void setChildRPGMapMaps(Set<RPGMapMap> childRPGMapMaps) {
 		this.childRPGMapMaps = childRPGMapMaps;
 	}
