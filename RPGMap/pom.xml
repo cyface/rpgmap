@@ -190,7 +190,7 @@
 									<directory>src/main/resources</directory>
 									<filtering>true</filtering>
 									<excludes>
-										<exclude>META-INF/*.xml</exclude>
+										<exclude>META-INF/*</exclude>
 									</excludes>
 								</resource>
 							</resources>
@@ -206,10 +206,11 @@
 							<outputDirectory>${basedir}/target/tomcat/webapps/ROOT/WEB-INF/</outputDirectory>
 							<resources>
 								<resource>
-									<directory>src/main/resources</directory>
+									<directory>src/main/webapp/WEB-INF</directory>
 									<filtering>true</filtering>
 									<excludes>
-										<exclude>META-INF/*.xml</exclude>
+										<exclude>**/lib</exclude>
+										<exclude>**/web.xml</exclude>
 									</excludes>
 								</resource>
 							</resources>
