@@ -24,6 +24,7 @@ public class MarkerEditor {
 		this.parentMapWidget = parentMapWidget;
 		this.markerToEdit = markerToEdit;
 		this.rpgMapOverlayToEdit = rpgMapOverlayToEdit;
+		markerEditFields = new HashMap<String, Widget>();
 	}
 
 	public void editMarker() {
@@ -34,10 +35,13 @@ public class MarkerEditor {
 		TextBox nameTextBox = new TextBox();
 		nameTextBox.setName("name");
 		nameTextBox.setMaxLength(60);
+		if (rpgMapOverlayToEdit.getName() != null) {
+			nameTextBox.setText(rpgMapOverlayToEdit.getName());
+		}
 		markerEditFields.put("name", nameTextBox);
 
 		Button saveButton = new Button("Save");
-		saveButton.addClickListener(new MarkerEditorSaveListener(markerToEdit, markerEditFields, rpgMapOverlayToEdit));
+		saveButton.addClickListener(new MarkerEditorSaveListener(markerToEdit, markerEditFields, rpgMapOverlayToEdit, popupPanel));
 
 		popupPanel.add(editorPanel);
 
@@ -45,7 +49,7 @@ public class MarkerEditor {
 		editorPanel.add(nameTextBox);
 		editorPanel.add(saveButton);
 
-		popupPanel.setPopupPosition(Window.getClientHeight() / 2, Window.getClientWidth() / 2);
+		popupPanel.setPopupPosition(Window.getClientHeight() / 2 - 100, Window.getClientWidth() / 2 - 100);
 		popupPanel.show();
 
 	}

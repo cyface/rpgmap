@@ -103,12 +103,13 @@ public class RPGMapManager {
 		RPGMapManager.getInstance().rpgMapList = rpgMapList;
 	}
 
-	public static void addOverlay(RPGMapMap parentRPGMap, Marker markerToAdd) {
+	public static void addOverlay(RPGMapMap parentRPGMapMap, Marker markerToAdd) {
 		RPGMapManager manager = RPGMapManager.getInstance();
 
 		manager.parentMapWidget.addOverlay(markerToAdd);
-		manager.overlayList.get(parentRPGMap).add(markerToAdd);
-		parentRPGMap.addChildMarker(markerToAdd);
+		manager.overlayList.get(parentRPGMapMap).add(markerToAdd);
+		RPGMapOverlay newOverlay = parentRPGMapMap.addChildMarker(markerToAdd);
+		manager.overlayMap.put(markerToAdd, newOverlay);
 	}
 
 	public static void saveMap(RPGMapMap rpgMapMapToSave) {
@@ -117,10 +118,10 @@ public class RPGMapManager {
 		manager.service.saveMap(rpgMapMapToSave, new MapServiceSaveMapAsyncCallback());
 	}
 
-	public static void saveOverlay(RPGMapOverlay rpgMapOverLayToSave) {
+	public static void saveOverlay(RPGMapOverlay rpgMapOverlayToSave) {
 		RPGMapManager manager = RPGMapManager.getInstance();
 
-		manager.service.saveOverlay(rpgMapOverLayToSave, new MapServiceSaveOverlayAsyncCallback());
+		manager.service.saveOverlay(rpgMapOverlayToSave, new MapServiceSaveOverlayAsyncCallback());
 	}
 
 	public static void deleteOverlay(Overlay overlayToDelete) {
