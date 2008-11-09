@@ -8,10 +8,11 @@ import java.util.Set;
 import com.cyface.rpg.map.client.handlers.RPGMapMarkerClickHandler;
 import com.cyface.rpg.map.client.mapservice.MapService;
 import com.cyface.rpg.map.client.mapservice.MapServiceAsync;
-import com.cyface.rpg.map.client.mapservice.MapServiceGetAllMapsAsyncCallback;
+import com.cyface.rpg.map.client.mapservice.MapServiceGetAllPublicMapsAsyncCallback;
 import com.cyface.rpg.map.client.mapservice.MapServiceSaveMapAsyncCallback;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
+import com.cyface.rpg.map.domain.entities.RPGMapUser;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.geom.LatLng;
@@ -25,6 +26,7 @@ public class RPGMapManager {
 	private static RPGMapManager instance;
 
 	private ArrayList<RPGMapMap> rpgMapList;
+	private ArrayList<RPGMapUser> userList;
 	private HashMap<RPGMapMap, ArrayList<Overlay>> overlayList;
 	private MapWidget parentMapWidget;
 
@@ -48,9 +50,9 @@ public class RPGMapManager {
 		ServiceDefTarget endpoint = (ServiceDefTarget) service;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "mapservice");
 
-		MapServiceGetAllMapsAsyncCallback callback = new MapServiceGetAllMapsAsyncCallback(parentMapWidget);
+		MapServiceGetAllPublicMapsAsyncCallback callback = new MapServiceGetAllPublicMapsAsyncCallback(parentMapWidget);
 
-		service.getAllMaps(callback);
+		service.getAllPublicMaps(callback);
 	}
 
 	public static void plotMapItems(RPGMapMap mapToPlot) {
@@ -109,6 +111,14 @@ public class RPGMapManager {
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "mapservice");
 
 		service.saveMap(parentRPGMapMap, new MapServiceSaveMapAsyncCallback());
+	}
+	
+	public static ArrayList<RPGMapUser> getUserList() {
+		return RPGMapManager.getInstance().userList;
+	}
+	
+	public static void setUserList(ArrayList<RPGMapUser> userList) {
+		RPGMapManager.getInstance().userList = userList;
 	}
 
 }

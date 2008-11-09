@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.client.mapservice.MapService;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
+import com.cyface.rpg.map.domain.entities.RPGMapUser;
 
 @SuppressWarnings("unchecked")
 public class MapServiceImpl extends HibernateRemoteService implements MapService {
@@ -33,13 +34,26 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		em = emf.createEntityManager();
 		HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
 	}
+	
+	public ArrayList<RPGMapUser> getAllUsers() {
+		ArrayList<RPGMapUser> resultList = new ArrayList<RPGMapUser>();
+		try {
+			Query getAllUsersQuery = em.createQuery("SELECT user FROM RPGMapUser as user ORDER BY username");
+			List rawResultList = getAllUsersQuery.getResultList();
+			//logger.debug(rawResultList);
+			resultList.addAll(rawResultList);
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		return resultList;
+	}
 
-	public ArrayList<RPGMapMap> getAllMaps() {
+	public ArrayList<RPGMapMap> getAllPublicMaps() {
 		ArrayList<RPGMapMap> resultList = new ArrayList<RPGMapMap>();
 		try {
-			Query getAllMapsQuery = em.createQuery("SELECT map FROM RPGMapMap as map ORDER BY name");
-			List rawResultList = getAllMapsQuery.getResultList();
-			logger.debug(rawResultList);
+			Query getAllPublicMapsQuery = em.createQuery("SELECT map FROM RPGMapMap as map WHERE map.publicallyViewable = true ORDER BY name");
+			List rawResultList = getAllPublicMapsQuery.getResultList();
+			//logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
 		} catch (Exception ex) {
 			logger.error(ex);
