@@ -10,11 +10,11 @@ import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class MapServiceGetAllMapsAsyncCallback implements AsyncCallback<ArrayList<RPGMapMap>> {
+public class MapServiceGetAllPublicMapsAsyncCallback implements AsyncCallback<ArrayList<RPGMapMap>> {
 
 	MapWidget parentMapWidget;
 
-	public MapServiceGetAllMapsAsyncCallback(MapWidget parentMap) {
+	public MapServiceGetAllPublicMapsAsyncCallback(MapWidget parentMap) {
 		this.parentMapWidget = parentMap;
 	}
 

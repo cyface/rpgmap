@@ -32,6 +32,7 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 	private String password;
 	private boolean enabled = true;
 	private Set<RPGMapMap> childRPGMapMaps;
+	private Set<RPGMapAttachment> childRPGMapAttachments;
 	private Date lastUpdated;
 
 	public RPGMapUser() {
@@ -53,12 +54,23 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 		outputBuffer.append(getPassword());
 		outputBuffer.append("\tLast Updated: ");
 		outputBuffer.append(getLastUpdated());
-		outputBuffer.append("\nMaps: ");
-		outputBuffer.append("(" + getChildRPGMapMaps().size() + ")\n");
-		Iterator<RPGMapMap> childMapsIterator = getChildRPGMapMaps().iterator();
-		while (childMapsIterator.hasNext()) {
-			RPGMapMap currentRPGMapMap = childMapsIterator.next();
-			outputBuffer.append(currentRPGMapMap);
+		if (getChildRPGMapMaps() != null) {
+			outputBuffer.append("\nMaps: ");
+			outputBuffer.append("(" + getChildRPGMapMaps().size() + ")\n");
+			Iterator<RPGMapMap> childMapsIterator = getChildRPGMapMaps().iterator();
+			while (childMapsIterator.hasNext()) {
+				RPGMapMap currentRPGMapMap = childMapsIterator.next();
+				outputBuffer.append(currentRPGMapMap);
+			}
+		}
+		if (getChildRPGMapAttachments() != null) {
+			outputBuffer.append("\nUser Attachments: ");
+			outputBuffer.append("(" + getChildRPGMapAttachments().size() + ")\n");
+			Iterator<RPGMapAttachment> childAttachmentsIterator = getChildRPGMapAttachments().iterator();
+			while (childAttachmentsIterator.hasNext()) {
+				RPGMapAttachment currentRPGMapAttachment = childAttachmentsIterator.next();
+				outputBuffer.append(currentRPGMapAttachment);
+			}
 		}
 
 		return outputBuffer.toString();
@@ -81,7 +93,7 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -118,13 +130,11 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Column(name = "owner_id")
 	public Set<RPGMapMap> getChildRPGMapMaps() {
 		return childRPGMapMaps;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@Column(name = "owner_id")
 	public void setChildRPGMapMaps(Set<RPGMapMap> childRPGMapMaps) {
 		this.childRPGMapMaps = childRPGMapMaps;
 	}
@@ -135,6 +145,26 @@ public class RPGMapUser extends LazyPojo implements Serializable {
 			this.childRPGMapMaps = new HashSet<RPGMapMap>();
 		}
 		this.childRPGMapMaps.add(mapToAdd);
+	}
+
+	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Column(name = "parent_user_id")
+	public Set<RPGMapAttachment> getChildRPGMapAttachments() {
+		return childRPGMapAttachments;
+	}
+
+	@OneToMany(mappedBy = "parentRPGMapUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Column(name = "parent_user_id")
+	public void setChildRPGMapAttachments(Set<RPGMapAttachment> childARPGMapttachments) {
+		this.childRPGMapAttachments = childARPGMapttachments;
+	}
+	
+	public void addChildAttachment(RPGMapAttachment attachmentToAdd) {
+		attachmentToAdd.setParentRPGMapUser(this);
+		if (this.childRPGMapAttachments == null) {
+			this.childRPGMapAttachments = new HashSet<RPGMapAttachment>();
+		}
+		this.childRPGMapAttachments.add(attachmentToAdd);
 	}
 
 }

@@ -14,6 +14,7 @@ import net.sf.hibernate4gwt.core.HibernateBeanManager;
 
 import org.apache.log4j.Logger;
 
+import com.cyface.rpg.map.domain.entities.RPGMapAttachment;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
 import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.cyface.rpg.map.domain.entities.RPGMapUser;
@@ -38,8 +39,12 @@ public class MapServiceCreateSampleData extends TestCase {
 			truncUserTableQuery.executeUpdate();
 
 			// Clean out the overlay table
-			Query truncPointTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.overlay");
-			truncPointTableQuery.executeUpdate();
+			Query truncOverlayTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.overlay");
+			truncOverlayTableQuery.executeUpdate();
+			
+			// Clean out the overlay table
+			Query truncAttachmentTableQuery = em.createNativeQuery("TRUNCATE TABLE rpgmap.attachment");
+			truncAttachmentTableQuery.executeUpdate();
 			
 			// Create the user
 			RPGMapUser mainUser = new RPGMapUser();
@@ -47,25 +52,39 @@ public class MapServiceCreateSampleData extends TestCase {
 			mainUser.setUsername("cyface");
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			mainUser.setPassword(encoder.encodePassword("test", null));
-			em.persist(mainUser);
+			
+			/* Create an attachment for the user */
+			RPGMapAttachment userAttachment = new RPGMapAttachment();
+			userAttachment.setName("Main User Attachment");
+			userAttachment.setAttachment("This is the Main User!");
+			mainUser.addChildAttachment(userAttachment);
 
 			// Create the map
 			RPGMapMap mainMap = new RPGMapMap();
 			mainMap.setName("Return to Northmoor");
-			mainMap.setParentRPGMapUser(mainUser);
-			em.persist(mainMap);
+			mainUser.addChildRPGMapMap(mainMap);
+			
+			em.persist(mainUser); // Save now to guarantee ID 1
+			
+			/* Create an attachment for the map */
+			RPGMapAttachment mapAttachment = new RPGMapAttachment();
+			mapAttachment.setName("Main Map Attachment");
+			mapAttachment.setAttachment("This is the Main Map!");
+			mainMap.addChildAttachment(mapAttachment);
+			
+			em.persist(mainMap); // Save now to guarantee ID 1
 
 			/* Create second map with child overlays */
 			RPGMapMap secondaryMap = new RPGMapMap();
 			secondaryMap.setName("Return to Northmoor GM Only");
-			secondaryMap.setParentRPGMapUser(mainUser);
+			secondaryMap.setPublicallyViewable(false);
+			mainUser.addChildRPGMapMap(secondaryMap);
 
 			RPGMapOverlay narrowsMarker = new RPGMapOverlay();
 			narrowsMarker.setName("The Narrows 2");
 			narrowsMarker.setLatitude(18.18);
 			narrowsMarker.setLongitude(-37.0);
 			narrowsMarker.setType(RPGMapOverlay.MARKER_TYPE);
-			narrowsMarker.setParentRPGMapMap(secondaryMap);
 			secondaryMap.addChildRPGMapOverlay(narrowsMarker);
 
 			RPGMapOverlay lostVillageMarker = new RPGMapOverlay();
@@ -73,22 +92,24 @@ public class MapServiceCreateSampleData extends TestCase {
 			lostVillageMarker.setLatitude(16.4);
 			lostVillageMarker.setLongitude(-40.0);
 			lostVillageMarker.setType(RPGMapOverlay.MARKER_TYPE);
-			lostVillageMarker.setParentRPGMapMap(secondaryMap);
 			secondaryMap.addChildRPGMapOverlay(lostVillageMarker);
+			
+			/* Create an attachment for one of the overlays */
+			RPGMapAttachment lostVillageAttachment = new RPGMapAttachment();
+			lostVillageAttachment.setName("The Lost Village Attachment");
+			lostVillageAttachment.setAttachment("This is the Lost Village!");
+			lostVillageMarker.addChildAttachment(lostVillageAttachment);
 
-			em.persist(secondaryMap);
+			em.merge(mainUser); //Save everything
 
 			/* Commit and Clean-Up */
 			et.commit();
 
-			RPGMapMap mainMapVerify = em.find(RPGMapMap.class, new Integer(1));
-			assertNotNull(mainMapVerify);
-			assertEquals("Return to Northmoor", mainMapVerify.getName());
-
-			RPGMapMap secondaryMapVerify = em.find(RPGMapMap.class, new Integer(2));
-			assertNotNull(secondaryMapVerify);
-			assertEquals("Return to Northmoor GM Only", secondaryMapVerify.getName());
-			assertEquals(2, secondaryMapVerify.getChildRPGMapOverlays().size());
+			RPGMapUser mainUserVerify = em.find(RPGMapUser.class, new Integer(1));
+			assertNotNull(mainUserVerify);
+			assertEquals("Tim White", mainUserVerify.getName());
+			assertEquals(2, mainUserVerify.getChildRPGMapMaps().size());
+			assertEquals(1, mainUserVerify.getChildRPGMapAttachments().size());
 
 			em.close();
 			emf.close();
