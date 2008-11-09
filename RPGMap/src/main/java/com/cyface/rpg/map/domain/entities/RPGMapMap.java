@@ -148,7 +148,7 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 		this.childRPGMapOverlays.add(overlayToAdd);
 	}
 
-	public void addChildMarker(Marker markerToAdd) {
+	public RPGMapOverlay addChildMarker(Marker markerToAdd) {
 		RPGMapOverlay newMarker = new RPGMapOverlay();
 		newMarker.setLatitude(markerToAdd.getLatLng().getLatitude());
 		newMarker.setLongitude(markerToAdd.getLatLng().getLongitude());
@@ -159,6 +159,7 @@ public class RPGMapMap extends LazyPojo implements Serializable {
 			newMarker.setName("No Name Yet");
 		}
 		this.addChildRPGMapOverlay(newMarker);
+		return newMarker;
 	}
 
 	@OneToMany(mappedBy = "parentRPGMapMap", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

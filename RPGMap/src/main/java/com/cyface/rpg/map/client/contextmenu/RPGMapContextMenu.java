@@ -79,8 +79,8 @@ public class RPGMapContextMenu {
 		menu.contextMenuPanel = new PopupPanel();
 		
 		MenuBar contextMenu = new MenuBar(true);
-		MenuItem renameMarkerMenuItem = new MenuItem("Edit This Marker", new EditMarkerCommand(parentMapWidget, clickedMarker, clickedRPGMapOverlay));
-		contextMenu.addItem(renameMarkerMenuItem);
+		MenuItem editMarkerMenuItem = new MenuItem("Edit This Marker", new EditMarkerCommand(parentMapWidget, clickedMarker, clickedRPGMapOverlay));
+		contextMenu.addItem(editMarkerMenuItem);
 		MenuItem addMarkerMenuItem = new MenuItem("Remove This Marker", new RemoveMarkerCommand(parentMapWidget, clickedMarker, clickedRPGMapOverlay));
 		contextMenu.addItem(addMarkerMenuItem);
 		menu.contextMenuPanel.add(contextMenu);
