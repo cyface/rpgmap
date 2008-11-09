@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.cyface.rpg.map.client.mapservice.MapService;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
+import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.cyface.rpg.map.domain.entities.RPGMapUser;
 
 @SuppressWarnings("unchecked")
@@ -34,13 +35,13 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		em = emf.createEntityManager();
 		HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
 	}
-	
+
 	public ArrayList<RPGMapUser> getAllUsers() {
 		ArrayList<RPGMapUser> resultList = new ArrayList<RPGMapUser>();
 		try {
 			Query getAllUsersQuery = em.createQuery("SELECT user FROM RPGMapUser as user ORDER BY username");
 			List rawResultList = getAllUsersQuery.getResultList();
-			//logger.debug(rawResultList);
+			// logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -53,7 +54,7 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		try {
 			Query getAllPublicMapsQuery = em.createQuery("SELECT map FROM RPGMapMap as map WHERE map.publicallyViewable = true ORDER BY name");
 			List rawResultList = getAllPublicMapsQuery.getResultList();
-			//logger.debug(rawResultList);
+			// logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -71,5 +72,28 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 		}
 		et.commit();
 		return mapToSave;
+	}
+
+	public RPGMapOverlay saveOverlay(RPGMapOverlay overlayToSave) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		if (overlayToSave.getId() > 0) {
+			em.merge(overlayToSave);
+		} else {
+			em.persist(overlayToSave);
+		}
+		et.commit();
+		return overlayToSave;
+	}
+
+	public void deleteOverlay(RPGMapOverlay overlayToDelete) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		RPGMapOverlay overlayReference = em.find(RPGMapOverlay.class, overlayToDelete.getId());
+		logger.debug(overlayReference);
+		RPGMapMap parentMap = overlayReference.getParentRPGMapMap();
+		parentMap.getChildRPGMapOverlays().remove(overlayReference);
+		em.remove(overlayReference);
+		et.commit();
 	}
 }

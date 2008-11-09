@@ -4,9 +4,11 @@ import java.util.Iterator;
 
 import com.cyface.rpg.map.client.mapmanager.RPGMapManager;
 import com.cyface.rpg.map.domain.entities.RPGMapMap;
+import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.geom.Point;
 import com.google.gwt.maps.client.overlay.Marker;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -65,12 +67,21 @@ public class RPGMapContextMenu {
 	}
 	
 	public static void openMarkerMenu(MapWidget parentMapWidget, Point clickedPoint, Marker clickedMarker) {
+		RPGMapManager manager = RPGMapManager.getInstance();
+		RPGMapOverlay clickedRPGMapOverlay = manager.getOverlayMap().get(clickedMarker);
+		if (clickedRPGMapOverlay == null) {
+			Window.alert("Clicked Marker Has No Matching Overlay Object!");
+		}
+		
+		
 		RPGMapContextMenu menu = RPGMapContextMenu.getInstance();
 		menu.contextMenuPanel.hide();
 		menu.contextMenuPanel = new PopupPanel();
 		
 		MenuBar contextMenu = new MenuBar(true);
-		MenuItem addMarkerMenuItem = new MenuItem("Remove This Marker", new RemoveMarkerCommand(parentMapWidget, clickedMarker));
+		MenuItem renameMarkerMenuItem = new MenuItem("Edit This Marker", new EditMarkerCommand(parentMapWidget, clickedMarker, clickedRPGMapOverlay));
+		contextMenu.addItem(renameMarkerMenuItem);
+		MenuItem addMarkerMenuItem = new MenuItem("Remove This Marker", new RemoveMarkerCommand(parentMapWidget, clickedMarker, clickedRPGMapOverlay));
 		contextMenu.addItem(addMarkerMenuItem);
 		menu.contextMenuPanel.add(contextMenu);
 		

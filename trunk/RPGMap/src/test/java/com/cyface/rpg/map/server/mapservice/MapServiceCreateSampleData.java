@@ -94,6 +94,13 @@ public class MapServiceCreateSampleData extends TestCase {
 			lostVillageMarker.setType(RPGMapOverlay.MARKER_TYPE);
 			secondaryMap.addChildRPGMapOverlay(lostVillageMarker);
 			
+			RPGMapOverlay deleteTestMarker = new RPGMapOverlay();
+			deleteTestMarker.setName("deleteTestMarker");
+			deleteTestMarker.setLatitude(16.4);
+			deleteTestMarker.setLongitude(-40.0);
+			deleteTestMarker.setType(RPGMapOverlay.MARKER_TYPE);
+			secondaryMap.addChildRPGMapOverlay(deleteTestMarker);
+			
 			/* Create an attachment for one of the overlays */
 			RPGMapAttachment lostVillageAttachment = new RPGMapAttachment();
 			lostVillageAttachment.setName("The Lost Village Attachment");
