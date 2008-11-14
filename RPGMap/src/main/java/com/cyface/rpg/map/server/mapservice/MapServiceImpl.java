@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 
@@ -25,21 +24,28 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceImpl.class);
 
-	EntityManagerFactory emf = null;
-	EntityManager em = null;
+	EntityManagerFactory entityManagerFactory = null;
+	EntityManager entityManager = null;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		emf = Persistence.createEntityManagerFactory("rpgmap");
-		em = emf.createEntityManager();
-		HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
+		entityManager = entityManagerFactory.createEntityManager();
+		HibernateBeanManager.getInstance().setEntityManagerFactory(entityManagerFactory);
+	}
+
+	public EntityManagerFactory getEntityManagerFactory() {
+		return entityManagerFactory;
+	}
+
+	public void setEntityManagerFactory(EntityManagerFactory emf) {
+		this.entityManagerFactory = emf;
 	}
 
 	public ArrayList<RPGMapUser> getAllUsers() {
 		ArrayList<RPGMapUser> resultList = new ArrayList<RPGMapUser>();
 		try {
-			Query getAllUsersQuery = em.createQuery("SELECT user FROM RPGMapUser as user ORDER BY username");
+			Query getAllUsersQuery = entityManager.createQuery("SELECT user FROM RPGMapUser as user ORDER BY username");
 			List rawResultList = getAllUsersQuery.getResultList();
 			// logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
@@ -52,7 +58,7 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 	public ArrayList<RPGMapMap> getAllPublicMaps() {
 		ArrayList<RPGMapMap> resultList = new ArrayList<RPGMapMap>();
 		try {
-			Query getAllPublicMapsQuery = em.createQuery("SELECT map FROM RPGMapMap as map WHERE map.publicallyViewable = true ORDER BY name");
+			Query getAllPublicMapsQuery = entityManager.createQuery("SELECT map FROM RPGMapMap as map WHERE map.publicallyViewable = true ORDER BY name");
 			List rawResultList = getAllPublicMapsQuery.getResultList();
 			// logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
@@ -63,37 +69,37 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 	}
 
 	public RPGMapMap saveMap(RPGMapMap mapToSave) {
-		EntityTransaction et = em.getTransaction();
+		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
 		if (mapToSave.getId() > 0) {
-			em.merge(mapToSave);
+			entityManager.merge(mapToSave);
 		} else {
-			em.persist(mapToSave);
+			entityManager.persist(mapToSave);
 		}
 		et.commit();
 		return mapToSave;
 	}
 
 	public RPGMapOverlay saveOverlay(RPGMapOverlay overlayToSave) {
-		EntityTransaction et = em.getTransaction();
+		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
 		if (overlayToSave.getId() > 0) {
-			em.merge(overlayToSave);
+			entityManager.merge(overlayToSave);
 		} else {
-			em.persist(overlayToSave);
+			entityManager.persist(overlayToSave);
 		}
 		et.commit();
 		return overlayToSave;
 	}
 
 	public void deleteOverlay(RPGMapOverlay overlayToDelete) {
-		EntityTransaction et = em.getTransaction();
+		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
-		RPGMapOverlay overlayReference = em.find(RPGMapOverlay.class, overlayToDelete.getId());
+		RPGMapOverlay overlayReference = entityManager.find(RPGMapOverlay.class, overlayToDelete.getId());
 		logger.debug(overlayReference);
 		RPGMapMap parentMap = overlayReference.getParentRPGMapMap();
 		parentMap.getChildRPGMapOverlays().remove(overlayReference);
-		em.remove(overlayReference);
+		entityManager.remove(overlayReference);
 		et.commit();
 	}
 }

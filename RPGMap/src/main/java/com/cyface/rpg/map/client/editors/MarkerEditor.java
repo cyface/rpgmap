@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 import com.cyface.rpg.map.domain.entities.RPGMapOverlay;
 import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.geom.Point;
 import com.google.gwt.maps.client.overlay.Marker;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -48,8 +48,10 @@ public class MarkerEditor {
 		editorPanel.add(nameLabel);
 		editorPanel.add(nameTextBox);
 		editorPanel.add(saveButton);
+		
+		Point markerPoint = parentMapWidget.convertLatLngToDivPixel(markerToEdit.getLatLng());
 
-		popupPanel.setPopupPosition(Window.getClientHeight() / 2 - 100, Window.getClientWidth() / 2 - 100);
+		popupPanel.setPopupPosition(markerPoint.getX() + 10, markerPoint.getY() + 10);
 		popupPanel.show();
 
 	}

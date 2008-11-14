@@ -241,6 +241,11 @@
 			<name>jboss.org</name>
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
+		<repository>
+			<id>maven2</id>
+			<name>Maven 2</name>
+			<url>http://repo2.maven.org/maven2</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -273,22 +278,22 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
-			<version>2.0.8</version>
+			<version>2.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>2.0.8</version>
+			<version>2.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>2.0.8</version>
+			<version>2.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>2.0.8</version>
+			<version>2.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -439,6 +444,31 @@
 			<type>zip</type>
 			<classifier>windows-libs</classifier>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jpa</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-mock</artifactId>
+			<version>2.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>2.5.6</version>
 		</dependency>
 	</dependencies>
 </project>
