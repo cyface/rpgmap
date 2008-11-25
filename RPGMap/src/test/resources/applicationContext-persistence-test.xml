@@ -9,4 +9,8 @@
 		<property name="password" value="rpgmappass" />
 	</bean>
 
+	<bean id="mapServiceImpl" class="com.cyface.rpg.map.server.mapservice.MapServiceImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
 </beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- Controllers ====================================================== -->
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="mapservice">
+					<ref bean="rpgmapServiceController" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="rpgmapServiceController" class="com.cyface.rpg.map.server.mapservice.ServletWrappingController">
+		<property name="servletName" value="sspService" />
+		<property name="servletInstance">
+			<ref bean="mapService" />
+		</property>
+	</bean>
+
+	<bean id="mapService" class="com.cyface.rpg.map.server.mapservice.MapServiceImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+</beans>

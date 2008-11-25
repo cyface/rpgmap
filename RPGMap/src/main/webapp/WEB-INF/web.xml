@@ -51,7 +51,8 @@
 	<!-- The Map Service RPC -->
 	<servlet>
 		<servlet-name>mapservice</servlet-name>
-		<servlet-class>com.cyface.rpg.map.server.mapservice.MapServiceImpl</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<!-- Velocity Tools 2.0 -->
