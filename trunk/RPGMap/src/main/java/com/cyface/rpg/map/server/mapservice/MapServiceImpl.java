@@ -50,7 +50,7 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 			// logger.debug(rawResultList);
 			resultList.addAll(rawResultList);
 		} catch (Exception ex) {
-			logger.error(ex);
+			logger.error("Get All Users Query Failed!", ex);
 		}
 		return resultList;
 	}
