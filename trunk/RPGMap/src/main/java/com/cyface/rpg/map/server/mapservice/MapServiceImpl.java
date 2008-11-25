@@ -39,6 +39,7 @@ public class MapServiceImpl extends HibernateRemoteService implements MapService
 	}
 
 	public void setEntityManagerFactory(EntityManagerFactory emf) {
+		logger.debug("*************************SET ENTITYMANAGER!");
 		this.entityManagerFactory = emf;
 	}
 

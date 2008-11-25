@@ -14,7 +14,8 @@
 	</bean>
 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/rpgmap" />
+		<property name="jndiName" value="jdbc/rpgmap" />
+		<property name="resourceRef" value="true" />
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -28,7 +29,7 @@
 
 	<!--
  	 ! Configure to make Spring perform persistence injection using
- 	 ! @PersistenceContext/@PersitenceUnit annotations
+ 	 ! @PersistenceContext/@PersistenceUnit annotations
  	 !-->
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
