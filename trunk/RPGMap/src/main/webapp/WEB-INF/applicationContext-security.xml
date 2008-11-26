@@ -4,8 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
 
+	<beans:import resource="classpath*:applicationContext-persistence.xml" />
+
 	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
-		<beans:property name="userDetailsService" ref="RPGMapUserDetailsService" />
+		<beans:property name="userDetailsService" ref="UserDetailsService" />
 		<beans:property name="passwordEncoder" ref="passwordEncoder" />
 		<custom-authentication-provider />
 	</beans:bean>
@@ -20,7 +22,9 @@
 		</beans:property>
 	</beans:bean>
 
-	<beans:bean id="RPGMapUserDetailsService" class="com.cyface.rpg.map.server.mapservice.UserDetailsServiceImpl" />
+	<beans:bean id="UserDetailsService" class="com.cyface.rpg.map.server.mapservice.UserDetailsServiceImpl">
+		<beans:property name="entityManagerFactory" ref="entityManagerFactory" />
+	</beans:bean>
 
 	<global-method-security secured-annotations="enabled">
 		<!--

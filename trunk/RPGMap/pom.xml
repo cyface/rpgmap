@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cyface.com</groupId>
@@ -79,11 +78,9 @@
 						<value>com.totsp.sample.client.AppMessages</value>
 					</i18nMessagesNames>
 					<!--
-						this parameter is VERY important with automatic mode - has to
+						This parameter is VERY important with automatic mode - has to
 						match the version in your declared deps
-					-->
-					<!--
-						if this does not match (default if left out is 1.5.2) you will
+						If this does not match (default if left out is 1.5.2) you will
 						have mysterious errors
 					-->
 					<gwtVersion>${gwtVersion}</gwtVersion>
@@ -269,6 +266,12 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.3.2.GA</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>javassist</artifactId>
+					<groupId>org.jboss</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

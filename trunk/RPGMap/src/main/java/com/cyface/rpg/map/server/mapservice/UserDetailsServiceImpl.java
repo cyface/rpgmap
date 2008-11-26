@@ -2,7 +2,6 @@ package com.cyface.rpg.map.server.mapservice;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import net.sf.hibernate4gwt.core.HibernateBeanManager;
@@ -19,14 +18,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceImpl.class);
 
-	EntityManagerFactory emf = null;
-	EntityManager em = null;
+	EntityManagerFactory entityManagerFactory;
+	EntityManager entityManager;
+	
+	public EntityManagerFactory getEntityManagerFactory() {
+		return entityManagerFactory;
+	}
+
+	public void setEntityManagerFactory(EntityManagerFactory emf) {
+		logger.debug("*******************USER DETAILS SET ENTITYMANAGER!");
+		this.entityManagerFactory = emf;
+	}
 
 	public UserDetails loadUserByUsername(String usernameToFind) throws UsernameNotFoundException, DataAccessException {
-		emf = Persistence.createEntityManagerFactory("rpgmap");
-		em = emf.createEntityManager();
-		HibernateBeanManager.getInstance().setEntityManagerFactory(emf);
-		Query getUserQuery = em.createQuery("SELECT user FROM RPGMapUser AS user WHERE user.username = ?");
+		entityManager = entityManagerFactory.createEntityManager();
+		HibernateBeanManager.getInstance().setEntityManagerFactory(entityManagerFactory);
+		Query getUserQuery = entityManager.createQuery("SELECT user FROM RPGMapUser AS user WHERE user.username = ?");
 		getUserQuery.setParameter(1, usernameToFind);
 		RPGMapUser userObject;
 		try {

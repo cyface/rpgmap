@@ -22,6 +22,10 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="UserDetailsService" class="com.cyface.rpg.map.server.mapservice.UserDetailsServiceImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 
 	<!--
  	 ! Configure to make Spring perform persistence injection using
