@@ -32,7 +32,8 @@ public class MapServiceTest extends AbstractJpaTests {
 	@Override
 	protected String[] getConfigLocations() {
 		logger.debug("Looking for Config!");
-		return new String[] { "classpath*:applicationContext-persistence.xml", "classpath*:applicationContext-persistence-test.xml" };
+		return new String[] { "classpath*:applicationContext-persistence.xml", 
+				"classpath*:applicationContext-persistence-test.xml"};
 	}
 
 	public void testGetAllUsers() {
