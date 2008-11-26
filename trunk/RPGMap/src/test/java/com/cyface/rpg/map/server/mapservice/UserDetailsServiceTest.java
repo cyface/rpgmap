@@ -22,14 +22,12 @@ public class UserDetailsServiceTest extends AbstractJpaTests {
 	@Override
 	protected String[] getConfigLocations() {
 		logger.debug("Looking for Config!");
-		return new String[] { "classpath*:applicationContext-persistence.xml",
-				"classpath*:applicationContext-persistence-test.xml",
-				"classpath*:applicationContext-security.xml" };
+		return new String[] {"classpath*:applicationContext-security-test.xml" };
 	}
 	
 	public void testGetUserDetails() {
 		System.out.println("HELLO");
-		userDetailsServiceImpl = new UserDetailsServiceImpl();
+		userDetailsServiceImpl = getUserDetailsServiceImpl();
 		UserDetails cyfaceUserDetails = userDetailsServiceImpl.loadUserByUsername("cyface");
 		assertNotNull(cyfaceUserDetails);
 		logger.debug(cyfaceUserDetails);
