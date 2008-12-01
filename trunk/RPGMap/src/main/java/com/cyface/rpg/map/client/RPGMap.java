@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class RPGMap implements EntryPoint {
 	private MapWidget map;
-
+	
 	/**
 	 * This is the entry point method.
 	 */
