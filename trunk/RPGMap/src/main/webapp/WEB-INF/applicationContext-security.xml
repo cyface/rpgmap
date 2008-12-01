@@ -9,10 +9,15 @@
 	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="UserDetailsService" />
 		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+		<beans:property name="saltSource" ref="saltSource" />
 		<custom-authentication-provider />
 	</beans:bean>
 
 	<beans:bean id="passwordEncoder" class="com.cyface.rpg.map.server.mapservice.BCryptPasswordEncoder" />
+
+	<beans:bean id="saltSource" class="org.springframework.security.providers.dao.salt.ReflectionSaltSource" >
+		<beans:property name="userPropertyToUse" value="username" />
+	</beans:bean> 
 
 	<beans:bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
 		<beans:property name="providers">
