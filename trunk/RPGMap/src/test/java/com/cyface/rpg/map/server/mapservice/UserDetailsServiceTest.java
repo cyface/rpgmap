@@ -26,10 +26,13 @@ public class UserDetailsServiceTest extends AbstractJpaTests {
 	}
 	
 	public void testGetUserDetails() {
-		System.out.println("HELLO");
+		System.out.println("*******testGetUserDetails");
 		userDetailsServiceImpl = getUserDetailsServiceImpl();
 		UserDetails cyfaceUserDetails = userDetailsServiceImpl.loadUserByUsername("cyface");
 		assertNotNull(cyfaceUserDetails);
 		logger.debug(cyfaceUserDetails);
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		logger.debug("Password Should Be: " + bCryptPasswordEncoder.encodePassword("cyface", cyfaceUserDetails.getUsername()));
+		assertTrue(bCryptPasswordEncoder.isPasswordValid(cyfaceUserDetails.getPassword(), "cyface", cyfaceUserDetails.getUsername()));
 	}
 }
