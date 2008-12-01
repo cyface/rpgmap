@@ -16,7 +16,7 @@ import com.cyface.rpg.map.domain.entities.RPGMapUser;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.MapServiceImpl.class);
+	Logger logger = Logger.getLogger(com.cyface.rpg.map.server.mapservice.UserDetailsServiceImpl.class);
 
 	EntityManagerFactory entityManagerFactory;
 	EntityManager entityManager;
