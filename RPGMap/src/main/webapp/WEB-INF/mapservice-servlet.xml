@@ -7,7 +7,7 @@
 	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="urlMap">
 			<map>
-				<entry key="mapservice">
+				<entry key="com.cyface.rpg.map.RPGMap/mapservice">
 					<ref bean="rpgmapServiceController" />
 				</entry>
 			</map>
