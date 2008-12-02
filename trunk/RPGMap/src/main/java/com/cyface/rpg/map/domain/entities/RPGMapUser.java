@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
 @Entity
-@Table(name = "user", schema = "rpgmap")
+@Table(name = "user")
 @PersistenceUnit(name = "rpgmap")
 @NamedQuery(name = "RPGMapUser.getAll", query = "SELECT map FROM RPGMapUser as map ORDER BY userId")
 public class RPGMapUser extends LazyPojo implements Serializable {

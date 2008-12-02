@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
 @Entity
-@Table(name = "attachment", schema = "rpgmap")
+@Table(name = "attachment")
 @PersistenceUnit(name = "rpgmap")
 @NamedQuery(name = "RPGMapAttachment.getAll", query = "SELECT attachment FROM RPGMapAttachment as attachment ORDER BY name")
 public class RPGMapAttachment extends LazyPojo implements Serializable {
