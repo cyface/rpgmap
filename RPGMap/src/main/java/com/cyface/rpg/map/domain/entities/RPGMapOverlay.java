@@ -23,7 +23,7 @@ import javax.persistence.Table;
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
 @Entity
-@Table(name = "overlay", schema = "rpgmap")
+@Table(name = "overlay")
 @PersistenceUnit(name = "rpgmap")
 @NamedQuery(name = "RPGMapOverlay.getAll", query = "SELECT overlay FROM RPGMapOverlay as overlay ORDER BY name")
 public class RPGMapOverlay extends LazyPojo implements Serializable {

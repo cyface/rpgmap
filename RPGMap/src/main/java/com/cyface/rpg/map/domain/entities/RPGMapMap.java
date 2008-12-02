@@ -25,7 +25,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 import com.google.gwt.maps.client.overlay.Marker;
 
 @Entity
-@Table(name = "map", schema = "rpgmap")
+@Table(name = "map")
 @PersistenceUnit(name = "rpgmap")
 @NamedQuery(name = "RPGMapMap.getAll", query = "SELECT map FROM RPGMapMap as map ORDER BY name")
 public class RPGMapMap extends LazyPojo implements Serializable {
